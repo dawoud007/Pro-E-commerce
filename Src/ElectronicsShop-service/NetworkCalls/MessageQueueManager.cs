@@ -1,5 +1,7 @@
 using System.Text;
+using ElectronicsShop_service.Helpers;
 using ElectronicsShop_service.Interfaces;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -7,13 +9,14 @@ namespace Authentication.Infrastructure.NetworkCalls.MessageQueue;
 public class MessageQueueManager : IMessageQueueManager
 {
     private readonly IModel channel;
-    public MessageQueueManager()
+    public MessageQueueManager(IOptions<RabbitMqConnectionHelper> options)
     {
+        var connectionHelper = options.Value;
         var connectionFactory = new ConnectionFactory
         {
-            HostName = "localhost",
-            UserName = "guest",
-            Password = "guest"
+            HostName = connectionHelper.Host,
+            UserName = connectionHelper.UserName,
+            Password = connectionHelper.Password
         };
         channel = connectionFactory.CreateConnection().CreateModel();
 

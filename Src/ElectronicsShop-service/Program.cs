@@ -1,4 +1,10 @@
 using ElectronicsShop_service;
+using ElectronicsShop_service.BusinessLogic;
+using ElectronicsShop_service.Helpers;
+using ElectronicsShop_service.Interfaces;
+using ElectronicsShop_service.Repositories;
+using ElectronicsShop_service.Validations;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +22,23 @@ var connnectionString = builder.Configuration.GetConnectionString("DefaultConnec
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connnectionString
     , ServerVersion.AutoDetect(connnectionString)));
+
+//add validation from current assembly
+builder.Services.AddValidatorsFromAssembly(typeof(CustomerValidations).Assembly);
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerUnitOfWork, CustomerBusiness>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductUnitOfWork, ProductBusiness>();
+
+builder.Services.Configure<RabbitMqConnectionHelper>(builder.Configuration.GetSection("rabbitmq"));
+
+
+
+
 
 
 var app = builder.Build();

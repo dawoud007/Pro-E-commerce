@@ -40,3 +40,7 @@ C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\obj\D
 C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\Humanizer.dll
 C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\RabbitMQ.Client.dll
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\System.Threading.Channels.dll

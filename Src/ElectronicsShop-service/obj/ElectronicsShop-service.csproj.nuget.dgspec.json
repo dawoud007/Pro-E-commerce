@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj": {}
+    "C:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj": {}
   },
   "projects": {
-    "c:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj": {
+    "C:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj",
+        "projectUniqueName": "C:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj",
         "projectName": "ElectronicsShop-service",
-        "projectPath": "c:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj",
+        "projectPath": "C:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj",
         "packagesPath": "C:\\Users\\abazi\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\obj\\",
+        "outputPath": "C:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abazi\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,9 +38,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
             "CommonGenericClasses": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.5.2, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
