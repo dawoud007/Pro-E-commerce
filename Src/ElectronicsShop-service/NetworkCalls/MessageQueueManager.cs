@@ -1,7 +1,5 @@
 using System.Text;
 using ElectronicsShop_service.Interfaces;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
