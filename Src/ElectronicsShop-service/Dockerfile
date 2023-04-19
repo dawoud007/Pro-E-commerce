@@ -3,6 +3,7 @@ WORKDIR /app
 EXPOSE 5000
 
 ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_ENVIRONMENT=Development
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
@@ -20,7 +21,7 @@ RUN dotnet build "ElectronicsShop-service.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "ElectronicsShop-service.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ElectronicsShop-service.dll"]
+FROM build AS final
+WORKDIR /src/ElectronicsShop-service
+RUN dotnet dev-certs https --trust
+ENTRYPOINT ["dotnet", "run"]
