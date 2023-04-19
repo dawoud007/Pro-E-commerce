@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Persistence"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Presentation", "Authentication\Authentication.Presentation\Authentication.Presentation.csproj", "{42252866-2504-407D-9A5C-A09D39810407}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shared", "Payment-GateWay\shared\shared.csproj", "{29C99675-40C6-43AC-B6FC-8B953E903B13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{42252866-2504-407D-9A5C-A09D39810407}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42252866-2504-407D-9A5C-A09D39810407}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42252866-2504-407D-9A5C-A09D39810407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29C99675-40C6-43AC-B6FC-8B953E903B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29C99675-40C6-43AC-B6FC-8B953E903B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29C99675-40C6-43AC-B6FC-8B953E903B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29C99675-40C6-43AC-B6FC-8B953E903B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1AA65ACE-7D5E-4754-AEC2-ADBDD3FC63AC} = {413EF8B6-BB23-4008-AABC-0D3875C97068}
@@ -73,5 +79,6 @@ Global
 		{5BA22492-3028-4DC0-913A-7F230EC8E51B} = {B8170B21-7C59-4D86-96EF-DA8740817F03}
 		{04865726-803A-4624-BD62-0A0205E6A5CE} = {B8170B21-7C59-4D86-96EF-DA8740817F03}
 		{42252866-2504-407D-9A5C-A09D39810407} = {B8170B21-7C59-4D86-96EF-DA8740817F03}
+		{29C99675-40C6-43AC-B6FC-8B953E903B13} = {413EF8B6-BB23-4008-AABC-0D3875C97068}
 	EndGlobalSection
 EndGlobal
