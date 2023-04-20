@@ -4,13 +4,19 @@ using System.ComponentModel.DataAnnotations;
 namespace ElectronicsShop_service.Dtos;
 public class ProductDto : BaseDto
 {
-    [Required]
     public int? code { get; set; }
-    [Required]
 
     public string Name { get; set; } = "";
-  
-    [Required]
+    public Guid? categoryID { get; set; }
 
     public string? Brand { get; set; }
+    public string? Manufacturer { get; set; }
+    public string? color { get; set; }
+    public string? description { get; set; }
+    public string? image { get; set; }
+
+    public float Rating { get; set; }
+
+    public string? status { get; set; }
+
 }
