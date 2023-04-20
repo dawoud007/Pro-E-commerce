@@ -3,6 +3,7 @@ using System;
 using ElectronicsShop_service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicsShop_service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230420143728_updateModels")]
+    partial class updateModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 46, 35, 482, DateTimeKind.Local).AddTicks(2735));
+                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 37, 28, 759, DateTimeKind.Local).AddTicks(6239));
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("char(36)");
@@ -53,7 +55,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 46, 35, 484, DateTimeKind.Local).AddTicks(5275));
+                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 37, 28, 762, DateTimeKind.Local).AddTicks(3222));
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
@@ -79,7 +81,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 46, 35, 484, DateTimeKind.Local).AddTicks(6150));
+                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 37, 28, 762, DateTimeKind.Local).AddTicks(4131));
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("longtext");
@@ -120,9 +122,10 @@ namespace ElectronicsShop_service.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Brand")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("CartId")
+                    b.Property<Guid>("CartId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("CartId1")
@@ -131,9 +134,10 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 46, 35, 487, DateTimeKind.Local).AddTicks(4514));
+                        .HasDefaultValue(new DateTime(2023, 4, 20, 16, 37, 28, 765, DateTimeKind.Local).AddTicks(351));
 
                     b.Property<string>("Manufacturer")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -143,22 +147,27 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<float>("Rating")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("categoryID")
+                    b.Property<Guid>("categoryId")
                         .HasColumnType("char(36)");
 
                     b.Property<int?>("code")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("color")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("description")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("image")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("status")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -168,7 +177,7 @@ namespace ElectronicsShop_service.Migrations
                     b.HasIndex("CartId1")
                         .IsUnique();
 
-                    b.HasIndex("categoryID");
+                    b.HasIndex("categoryId");
 
                     b.ToTable("Products");
                 });
@@ -207,7 +216,9 @@ namespace ElectronicsShop_service.Migrations
                 {
                     b.HasOne("ElectronicsShop_service.Models.Cart", null)
                         .WithMany("Products")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ElectronicsShop_service.Models.Cart", "Cart")
                         .WithOne("Product")
@@ -215,7 +226,9 @@ namespace ElectronicsShop_service.Migrations
 
                     b.HasOne("ElectronicsShop_service.Models.Category", "category")
                         .WithMany()
-                        .HasForeignKey("categoryID");
+                        .HasForeignKey("categoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cart");
 

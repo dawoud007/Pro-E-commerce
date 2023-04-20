@@ -2,35 +2,35 @@ using CommonGenericClasses;
 using System.Drawing;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElectronicsShop_service.Models;
 public class Product : BaseEntity
 {
-    [Required]
     public int? code { get; set; }
-    [Required]
 
     public string Name { get; set; } = "";
-    [Required]
 
+    public Guid? categoryID { get; set; }
+ 
     public Category? category { get; set; }
-    [Required]
 
     public string? Brand { get; set; }
-    [Required]
     public string? Manufacturer { get; set; }
-    [Required]
     public string? color { get; set; }
-    [Required]
     public string? description { get; set; }
-    [Required]
     public string? image { get; set; }
 
-    [Required]
     public float Rating { get; set; }
 
-    [Required]
     public string? status { get; set; }
+
+    public Guid? CartId { get; set; }
+
+
+    public Cart? Cart { get; set; }
+
+    public ICollection<Customer> Customers { get; set;}
 
 
 

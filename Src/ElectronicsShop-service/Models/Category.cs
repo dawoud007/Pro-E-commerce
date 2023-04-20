@@ -9,4 +9,6 @@ public class Category : BaseEntity
         public string Name { get; set; }
     [DisplayName("Display Order")]
     public int? DisplayOrder { get; set; }
+
+    public ICollection<Product> Products { get; set;}
 }
