@@ -7,6 +7,7 @@ using ElectronicsShop_service.Validations;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 //give the add package code to add the Microsoft.EntityFrameworkCore.Design package
 
@@ -14,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,7 +29,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //add validation from current assembly
 builder.Services.AddValidatorsFromAssembly(typeof(CustomerValidations).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartUnitOfWork, CartBusiness>();
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryUnitOfWork, CategoryBusiness>();
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerUnitOfWork, CustomerBusiness>();
