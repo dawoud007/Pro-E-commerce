@@ -50,7 +50,7 @@ builder.Services.AddScoped<IProductUnitOfWork, ProductBusiness>();
 
 builder.Services.Configure<RabbitMqConnectionHelper>(builder.Configuration.GetSection("rabbitmq"));
 
-<<<<<<< HEAD
+
 
 Jwt jwt = new();
 builder.Configuration.GetSection("Jwt").Bind(jwt);
@@ -66,7 +66,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuerSigningKey = true,
     };
 });
-=======
+
 //configure cors policy 
 builder.Services.AddCors(options =>
 {
@@ -78,7 +78,7 @@ builder.Services.AddCors(options =>
     });
 });
 
->>>>>>> 6755d7e01b891492ffdd1dbce89320b81a3de246
+
 
 
 
