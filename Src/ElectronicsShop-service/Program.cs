@@ -1,9 +1,10 @@
+
 using Authentication.Infrastructure.Models;
-using Authentication.Infrastructure.NetworkCalls.MessageQueue;
 using ElectronicsShop_service;
 using ElectronicsShop_service.BusinessLogic;
 using ElectronicsShop_service.Helpers;
 using ElectronicsShop_service.Interfaces;
+using ElectronicsShop_service.NetworkCalls;
 using ElectronicsShop_service.Repositories;
 using ElectronicsShop_service.Validations;
 using FluentValidation;
@@ -13,16 +14,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
-//give the add package code to add the Microsoft.EntityFrameworkCore.Design package
-
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 var connnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -91,9 +87,6 @@ builder.Services.AddCors(options =>
         .AllowAnyHeader();
     });
 });
-
-
-
 
 var app = builder.Build();
 

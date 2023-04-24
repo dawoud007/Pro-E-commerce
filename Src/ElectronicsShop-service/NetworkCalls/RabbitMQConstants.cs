@@ -1,4 +1,4 @@
-namespace Authentication.Infrastructure.NetworkCalls.MessageQueue;
+namespace ElectronicsShop_service.NetworkCalls;
 public static class RabbitMQConstants
 {
     public const string AuthenticationExchange = "Authentication";

@@ -1,5 +1,4 @@
 using System.Text;
-using ElectronicsShop_service;
 using ElectronicsShop_service.Helpers;
 using ElectronicsShop_service.Interfaces;
 using ElectronicsShop_service.Models;
@@ -9,7 +8,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Authentication.Infrastructure.NetworkCalls.MessageQueue;
+namespace ElectronicsShop_service.NetworkCalls;
 public class MessageQueueManager : IMessageQueueManager
 {
     private readonly IModel channel;
@@ -58,7 +57,7 @@ public class MessageQueueManager : IMessageQueueManager
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
             System.Console.WriteLine(message);
-            var customer = JsonConvert.DeserializeObject<Customer>(message);
+            var customer = JsonConvert.DeserializeObject<Customer>(message)!;
             await dbcontext.Customers!.AddAsync(customer);
             await dbcontext.SaveChangesAsync();
         };
