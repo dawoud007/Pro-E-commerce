@@ -1,3 +1,4 @@
+using Authentication.Infrastructure.Models;
 using Authentication.Infrastructure.NetworkCalls.MessageQueue;
 using ElectronicsShop_service;
 using ElectronicsShop_service.BusinessLogic;
@@ -6,8 +7,10 @@ using ElectronicsShop_service.Interfaces;
 using ElectronicsShop_service.Repositories;
 using ElectronicsShop_service.Validations;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 //give the add package code to add the Microsoft.EntityFrameworkCore.Design package
@@ -60,6 +63,25 @@ catch (Exception ex)
     Console.WriteLine(ex);
 }
 
+
+
+
+Jwt jwt = new();
+builder.Configuration.GetSection("Jwt").Bind(jwt);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new()
+    {
+        ValidIssuer = jwt.Issuer,
+        ValidAudience = jwt.Audience,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Base64UrlEncoder.DecodeBytes(jwt.Key)),
+        ValidateIssuerSigningKey = true,
+    };
+});
+
+//configure cors policy 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
