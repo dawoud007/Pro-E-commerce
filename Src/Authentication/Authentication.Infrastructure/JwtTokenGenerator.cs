@@ -6,6 +6,7 @@ using Authentication.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace Authentication.Infrastructure;
 public class JwtTokenGenerator : ITokenGenerator
@@ -15,13 +16,19 @@ public class JwtTokenGenerator : ITokenGenerator
     {
         jwt = jwtOptions.Value;
     }
-    public string Generate(IdentityUser user)
+    public string Generate(IdentityUser user, IList<string> roles)
     {
-        Claim[] claims = new Claim[]{
+        var roleClaims = new List<Claim>();
+        foreach (string role in roles)
+        {
+            roleClaims.Add(new Claim("roles", role));
+        }
+        var claims = new Claim[]{
             new (ClaimTypes.NameIdentifier,user.UserName),
             new (ClaimTypes.Email,user.Email),
             new (ClaimTypes.PrimarySid,user.Id)
-        };
+        }
+        .Union(roleClaims);
 
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(

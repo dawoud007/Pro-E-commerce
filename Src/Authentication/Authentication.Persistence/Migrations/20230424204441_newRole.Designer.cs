@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Authentication.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230204120440_hotfix")]
-    partial class hotfix
+    [Migration("20230424204441_newRole")]
+    partial class newRole
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,9 +70,6 @@ namespace Authentication.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<byte[]>("ProfileImage")
-                        .HasColumnType("longblob");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -92,7 +89,27 @@ namespace Authentication.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a746c47a-da6d-45ad-910f-257aad147375",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e57decc0-0923-45e1-86d0-c695f878fe12",
+                            Email = "Leqaa.Technical@gmail.com",
+                            EmailConfirmed = true,
+                            Gender = 1,
+                            LockoutEnabled = false,
+                            Name = "Leqaa",
+                            NormalizedEmail = "LEQAA.TECHNICAL@GMAIL.COM",
+                            NormalizedUserName = "LEQAA",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFimV3O3DKjfh6CpdjZW8TUgrDNmtoDRWoG87HxlKx9bHfx12LmJHT20TGqGIUugkw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c09bf372-f3e5-4d78-88fc-f9be17c29bde",
+                            TwoFactorEnabled = false,
+                            UserName = "Leqaa"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -102,6 +119,10 @@ namespace Authentication.Persistence.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -119,6 +140,8 @@ namespace Authentication.Persistence.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -202,6 +225,18 @@ namespace Authentication.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a746c47a-da6d-45ad-910f-257aad147375",
+                            RoleId = "a746c47a-da6d-45ad-910f-257aad147375"
+                        },
+                        new
+                        {
+                            UserId = "a746c47a-da6d-45ad-910f-257aad147375",
+                            RoleId = "a746c47a-da6d-45ad-910f-257aad147376"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -227,7 +262,23 @@ namespace Authentication.Persistence.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
 
-                    b.ToTable("roles", (string)null);
+                    b.HasDiscriminator().HasValue("ApplicationRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a746c47a-da6d-45ad-910f-257aad147375",
+                            ConcurrencyStamp = "809cb97f-998c-4403-b732-48bca5d20691",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a746c47a-da6d-45ad-910f-257aad147376",
+                            ConcurrencyStamp = "42a9435f-b69a-466b-885c-0dab6d6b0759",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -277,15 +328,6 @@ namespace Authentication.Persistence.Migrations
                     b.HasOne("Authentication.Domain.Entities.ApplicationUser.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Authentication.Domain.Entities.ApplicationRole.ApplicationRole", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithOne()
-                        .HasForeignKey("Authentication.Domain.Entities.ApplicationRole.ApplicationRole", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

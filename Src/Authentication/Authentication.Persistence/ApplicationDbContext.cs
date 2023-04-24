@@ -9,6 +9,7 @@ using Authentication.Domain.Entities.ApplicationUser;
 using Microsoft.EntityFrameworkCore;
 using Authentication.Domain.Entities.ApplicationUser.Enums;
 using Microsoft.AspNetCore.Identity;
+using Authentication.Domain.Entities.ApplicationRole;
 
 namespace Authentication.Persistence
 {
@@ -36,10 +37,24 @@ namespace Authentication.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             var hasher = new PasswordHasher<ApplicationUser>();
+            var seedAdminRole = new ApplicationRole
+            {
+                Id = "a746c47a-da6d-45ad-910f-257aad147375",
+                Name = "admin",
+                NormalizedName = "ADMIN",
+            };
+            var seedUserRole = new ApplicationRole
+            {
+                Id = "a746c47a-da6d-45ad-910f-257aad147376",
+                Name = "user",
+                NormalizedName = "USER",
+            };
+            modelBuilder.Entity<ApplicationRole>().HasData(seedAdminRole, seedUserRole);
             var seedApplicationUser = new ApplicationUser
             {
+                Id = "a746c47a-da6d-45ad-910f-257aad147375",
                 Name = "Leqaa",
                 Email = "Leqaa.Technical@gmail.com",
                 Gender = Gender.Female,
@@ -49,7 +64,20 @@ namespace Authentication.Persistence
                 NormalizedUserName = "LEQAA",
                 PasswordHash = hasher.HashPassword(null!, "P@ssw0rd123")
             };
+            var seedIdentityAdminRole = new IdentityUserRole<string>
+            {
+                RoleId = "a746c47a-da6d-45ad-910f-257aad147375",
+                UserId = "a746c47a-da6d-45ad-910f-257aad147375"
+            };
+            var seedIdentityUserRole = new IdentityUserRole<string>
+            {
+                RoleId = "a746c47a-da6d-45ad-910f-257aad147376",
+                UserId = "a746c47a-da6d-45ad-910f-257aad147375"
+            };
+
             modelBuilder.Entity<ApplicationUser>().HasData(seedApplicationUser);
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(seedIdentityAdminRole, seedIdentityUserRole);
+
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }

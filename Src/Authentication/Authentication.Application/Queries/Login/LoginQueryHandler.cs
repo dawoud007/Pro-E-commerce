@@ -2,6 +2,7 @@ using Authentication.Application.CommandInterfaces;
 using Authentication.Application.Interfaces;
 using Authentication.Application.Models;
 using Authentication.Domain.Entities.ApplicationUser;
+using Authentication.Domain.Entities.ApplicationUser.Errors;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 
@@ -23,7 +24,7 @@ public class LoginQueryHandler : IHandler<LoginQuery>
         var user = await _userManager.FindByNameAsync(request.UserName);
         if (user is null)
         {
-            authenticationResults.AddErrorMessages("username doesn't exist, Please register");
+            authenticationResults.AddErrorMessages(UserErrors.UserDoesNotExist);
             return authenticationResults;
         }
         if (!await _userManager.CheckPasswordAsync(user, request.Password))
@@ -37,7 +38,8 @@ public class LoginQueryHandler : IHandler<LoginQuery>
             authenticationResults.AddErrorMessages("you email is not confirmed please confirm it first");
             return authenticationResults;
         }
-        var token = _tokenGenerator.Generate(user);
+        var roles = await _userManager.GetRolesAsync(user);
+        var token = _tokenGenerator.Generate(user, await _userManager.GetRolesAsync(user));
         authenticationResults.SetToken(token);
         authenticationResults.IsSuccess = true;
         authenticationResults.User = user.Adapt<UserReadModel>();
