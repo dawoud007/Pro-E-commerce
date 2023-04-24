@@ -35,6 +35,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //add validation from current assembly
 builder.Services.AddValidatorsFromAssembly(typeof(CustomerValidations).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartUnitOfWork, CartBusiness>();
 
@@ -49,6 +50,7 @@ builder.Services.AddScoped<IProductUnitOfWork, ProductBusiness>();
 
 builder.Services.Configure<RabbitMqConnectionHelper>(builder.Configuration.GetSection("rabbitmq"));
 
+<<<<<<< HEAD
 
 Jwt jwt = new();
 builder.Configuration.GetSection("Jwt").Bind(jwt);
@@ -64,6 +66,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuerSigningKey = true,
     };
 });
+=======
+//configure cors policy 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
+>>>>>>> 6755d7e01b891492ffdd1dbce89320b81a3de246
 
 
 
@@ -87,5 +102,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAll");
 
 app.Run();
