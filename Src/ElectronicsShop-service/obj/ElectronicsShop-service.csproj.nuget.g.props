@@ -20,7 +20,11 @@
     <Import Project="$(NuGetPackageRoot)coreadmin\2.7.0\buildTransitive\CoreAdmin.props" Condition="Exists('$(NuGetPackageRoot)coreadmin\2.7.0\buildTransitive\CoreAdmin.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+<<<<<<< HEAD
+    <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\Mo Dawoud\.nuget\packages\microsoft.extensions.apidescription.server\3.0.0</PkgMicrosoft_Extensions_ApiDescription_Server>
+=======
     <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\abazi\.nuget\packages\microsoft.extensions.apidescription.server\3.0.0</PkgMicrosoft_Extensions_ApiDescription_Server>
     <PkgNewtonsoft_Json Condition=" '$(PkgNewtonsoft_Json)' == '' ">C:\Users\abazi\.nuget\packages\newtonsoft.json\9.0.1</PkgNewtonsoft_Json>
+>>>>>>> 6755d7e01b891492ffdd1dbce89320b81a3de246
   </PropertyGroup>
 </Project>
