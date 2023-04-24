@@ -7,5 +7,20 @@ public class CartRepository : BaseRepo<Cart>, ICartRepository
 {
     public CartRepository(ApplicationDbContext context) : base(context)
     {
+
+
+    }
+
+
+    public int DecrementCount(Cart shoppingCart, int count)
+    {
+        shoppingCart.Count -= count;
+        return shoppingCart.Count;
+    }
+
+    public int IncrementCount(Cart shoppingCart, int count)
+    {
+        shoppingCart.Count += count;
+        return shoppingCart.Count;
     }
 }

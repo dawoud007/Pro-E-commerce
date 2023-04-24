@@ -5,6 +5,9 @@ using ElectronicsShop_service.Interfaces;
 using ElectronicsShop_service.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 namespace ElectronicsShop_service.Controllers
 {
     [ApiController]
@@ -15,9 +18,11 @@ namespace ElectronicsShop_service.Controllers
 
         private readonly IProductRepository _productRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly ICustomerRepository _customerRepository;
         public CartController(ICartUnitOfWork unitOfWork,
             IProductRepository productRepository
             , ICartRepository cartRepository
+            , ICustomerRepository customerRepository
             
             
             
@@ -26,95 +31,63 @@ namespace ElectronicsShop_service.Controllers
 
             _productRepository = productRepository;
             _cartRepository = cartRepository;
+            _customerRepository = customerRepository;
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddToCart(int productId)
+        [HttpPost]
+     public async Task<string> RemoveFromCart([FromQuery] Guid? productId)
         {
-            // Get the product by its ID
-            var product = await _productRepository.GetByIdAsync(productId);
-
-            // If the product doesn't exist, return a 404 Not Found response
-            if (product == null)
+            if (productId! == null)
             {
-                return NotFound();
+                return "enter valid product ";
             }
 
-            // Add the specified product to the user's cart with the given quantity
-    /*        await _cartRepository.AddAsync(product);*/
+            await _cartRepository.RemoveByIdAsync(productId);
+            await _cartRepository.Save();
+            return "product deleted successfully";
 
-            // Return a success response with the updated cart data
-           /* var cart = await _cartRepository.GetCart();*/
-            return Ok();
-        }
-/*
-        [HttpDelete("remove")]
-        public IActionResult RemoveFromCart(int productId)
-        {
-            // Remove the specified product from the user's cart
-            _cartService.RemoveFromCart(productId);
-
-            // Return a success response with the updated cart data
-            var cart = _cartService.GetCart();
-            return Ok(cart);
         }
 
-        [HttpDelete("remove-all")]
-        public IActionResult RemoveAllFromCart()
-        {
-            // Remove all products from the user's cart
-            _cartService.RemoveAllFromCart();
 
-            // Return a success response with the updated cart data
-            var cart = _cartService.GetCart();
-            return Ok(cart);
+        [HttpPost]
+        public async Task<string> removeAllfromCart()
+        {
+
+            var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            Customer customer=(await _customerRepository.Get(u=>u.UserName== username)).FirstOrDefault()!;
+            /*var cart = (await _cartRepository.Get(c=>c.CustomerId==customer.Id,null,"")).FirstOrDefault()!;*/
+
+            await _cartRepository.RemoveAsync(c => c.CustomerId == customer.Id);
+
+            await _cartRepository.Save();
+            return $"cart deleted for {customer.Name}";
+           
+
         }
 
-        [HttpPut("reduce")]
-        public IActionResult ReduceProductAtCart(int productId, int quantity)
+        [HttpPost]
+        public async Task<string> Plus([FromQuery]Guid cartId)
         {
-            // Reduce the quantity of the specified product in the user's cart by a specified amount
-            _cartService.ReduceProductAtCart(productId, quantity);
-
-            // Return a success response with the updated cart data
-            var cart = _cartService.GetCart();
-            return Ok(cart);
+            Cart cart =  await _cartRepository.GetByIdAsync(cartId);
+            _cartRepository.IncrementCount(cart, 1);
+            await _cartRepository.Save();
+            return"item icreased by one";
         }
-
-        [HttpPut("increment")]
-        public IActionResult IncrementProductAtCart(int productId, int quantity)
+        [HttpPost]
+        public async Task<string> Minus(int cartId)
         {
-            // Increase the quantity of the specified product in the user's cart by a specified amount
-            _cartService.IncrementProductAtCart(productId, quantity);
-
-            // Return a success response with the updated cart data
-            var cart = _cartService.GetCart();
-            return Ok(cart);
-        }
-
-        [HttpGet("products/{categoryId}")]
-        public IActionResult FetchProductsByCategory(int categoryId)
-        {
-            // Retrieve a list of products in a specified category
-            var products = _productService.GetProductsByCategory(categoryId);
-
-            // If no products are found, return a 404 Not Found response
-            if (!products.Any())
+            Cart cart = await _cartRepository.GetByIdAsync(cartId);
+            if (cart.Count <= 1)
             {
-                return NotFound();
+                await _cartRepository.RemoveByIdAsync(cart.Id);
             }
+            else
+            {
+                _cartRepository.DecrementCount(cart, 1);
+            }
+            await _cartRepository.Save();
+            return "item decreased by one";
 
-            // Return a success response with the list of products
-            return Ok(products);
         }
 
-        [HttpGet("isAdmin")]
-        public IActionResult IsAdmin()
-        {
-            // Check if the current user is an admin
-            bool isAdmin = // logic to determine if user is an admin
-
-        // Return a success response with a boolean indicating whether the user is an admin
-        return Ok(isAdmin);
-        }*/
     }
 }

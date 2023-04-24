@@ -5,5 +5,7 @@ using System.Threading.Tasks;
 
 public interface ICartRepository : IBaseRepo<Cart>
 {
- /*   Task AddAsync(Product product);*/
+    int IncrementCount(Cart shoppingCart, int count);
+
+    int DecrementCount(Cart ShoppingCart, int count);
 }
