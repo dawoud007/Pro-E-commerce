@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using Authentication.Infrastructure.Models;
 using BusinessLogic.Entry.Options;
@@ -10,6 +11,7 @@ using ElectronicsShop_service.Repositories;
 using ElectronicsShop_service.Validations;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -31,7 +33,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connnectionString
     , ServerVersion.AutoDetect(connnectionString)));
 
-builder.Services.AddCoreAdmin();
 
 builder.Services.AddValidatorsFromAssembly(typeof(CustomerValidations).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -90,6 +91,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddCoreAdmin();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -111,6 +114,17 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/coreadmin" && context.Request.Query["password"] != "iamthebigadminhere")
+    {
+        context.Response.StatusCode = 403;
+        return;
+    }
+
+    await next(context);
+});
 
 app.MapDefaultControllerRoute();
 
