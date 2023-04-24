@@ -1,13 +1,10 @@
-﻿namespace ElectronicsShop_service.Models
+﻿namespace ElectronicsShop_service.Models;
+using CommonGenericClasses;
+
+public class CustomerProduct : BaseEntity
 {
-    public class CustomerProduct
-    {
-
-        public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
-        public Customer Customer { get; set; }
-
-        public Guid ProductId { get; set; }
-        public Product Product { get; set; }
-    }
+    public Guid CustomerId { get; set; }
+    public Customer? Customer { get; set; }
+    public Guid ProductId { get; set; }
+    public Product? Product { get; set; }
 }

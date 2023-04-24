@@ -7,6 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ElectronicsShop_service.Models;
 public class Product : BaseEntity
 {
+    public Product()
+    {
+        Customers = new HashSet<Customer>();
+    }
     public int? code { get; set; }
 
     public string Name { get; set; } = "";
