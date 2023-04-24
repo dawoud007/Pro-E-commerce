@@ -6,7 +6,7 @@ using ElectronicsShop_service.Repositories;
 using ElectronicsShop_service.Validations;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 //give the add package code to add the Microsoft.EntityFrameworkCore.Design package
