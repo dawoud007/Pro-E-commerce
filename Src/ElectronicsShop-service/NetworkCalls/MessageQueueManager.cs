@@ -1,7 +1,11 @@
 using System.Text;
+using ElectronicsShop_service;
 using ElectronicsShop_service.Helpers;
 using ElectronicsShop_service.Interfaces;
+using ElectronicsShop_service.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -9,7 +13,8 @@ namespace Authentication.Infrastructure.NetworkCalls.MessageQueue;
 public class MessageQueueManager : IMessageQueueManager
 {
     private readonly IModel channel;
-    public MessageQueueManager(IOptions<RabbitMqConnectionHelper> options)
+    private readonly IServiceProvider serviceProvider;
+    public MessageQueueManager(IOptions<RabbitMqConnectionHelper> options, IServiceProvider serviceProvider)
     {
         var connectionHelper = options.Value;
         var connectionFactory = new ConnectionFactory
@@ -19,10 +24,11 @@ public class MessageQueueManager : IMessageQueueManager
             Password = connectionHelper.Password
         };
         channel = connectionFactory.CreateConnection().CreateModel();
-
+        this.serviceProvider = serviceProvider;
     }
     public void SubscribeToUsersQueue()
     {
+
         channel.ExchangeDeclare(
             exchange: RabbitMQConstants.AuthenticationExchange,
             type: ExchangeType.Fanout,
@@ -45,11 +51,16 @@ public class MessageQueueManager : IMessageQueueManager
         props.DeliveryMode = 2;
 
         var consumer = new EventingBasicConsumer(channel);
-        consumer.Received += (model, ea) =>
+        consumer.Received += async (model, ea) =>
         {
+            var options = new DbContextOptions<ApplicationDbContext>();
+            var dbcontext = new ApplicationDbContext(options, serviceProvider.GetRequiredService<IConfiguration>());
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
             System.Console.WriteLine(message);
+            var customer = JsonConvert.DeserializeObject<Customer>(message);
+            await dbcontext.Customers!.AddAsync(customer);
+            await dbcontext.SaveChangesAsync();
         };
         channel.BasicConsume(
             queue: RabbitMQConstants.UserToBusiness,

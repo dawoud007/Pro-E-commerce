@@ -1,3 +1,4 @@
+using Authentication.Infrastructure.NetworkCalls.MessageQueue;
 using ElectronicsShop_service;
 using ElectronicsShop_service.BusinessLogic;
 using ElectronicsShop_service.Helpers;
@@ -6,7 +7,7 @@ using ElectronicsShop_service.Repositories;
 using ElectronicsShop_service.Validations;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 //give the add package code to add the Microsoft.EntityFrameworkCore.Design package
@@ -26,7 +27,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connnectionString
     , ServerVersion.AutoDetect(connnectionString)));
 
-//add validation from current assembly
+builder.Services.AddCoreAdmin();
+
 builder.Services.AddValidatorsFromAssembly(typeof(CustomerValidations).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
@@ -43,8 +45,21 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductUnitOfWork, ProductBusiness>();
 
 builder.Services.Configure<RabbitMqConnectionHelper>(builder.Configuration.GetSection("rabbitmq"));
+try
+{
+    MessageQueueManager messageQueueManager = new MessageQueueManager(
+        Options.Create<RabbitMqConnectionHelper>(
+            builder.Configuration.GetSection("rabbitmq").Get<RabbitMqConnectionHelper>()
+            ),
+        builder.Services.BuildServiceProvider()
+        );
+    messageQueueManager.SubscribeToUsersQueue();
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex);
+}
 
-//configure cors policy 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -72,12 +87,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
+app.UseStaticFiles();
+
 app.MapControllers();
 
-app.UseCors("AllowAll");
+app.MapDefaultControllerRoute();
+
 
 app.Run();

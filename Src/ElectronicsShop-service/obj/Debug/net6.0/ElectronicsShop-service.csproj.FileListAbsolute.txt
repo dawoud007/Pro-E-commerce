@@ -95,3 +95,6 @@ C:\Users\Mo Dawoud\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\obj\Debug\
 C:\Users\Mo Dawoud\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\obj\Debug\net6.0\ElectronicsShop-service.pdb
 C:\Users\Mo Dawoud\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\obj\Debug\net6.0\ElectronicsShop-service.genruntimeconfig.cache
 C:\Users\Mo Dawoud\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\obj\Debug\net6.0\ref\ElectronicsShop-service.dll
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\ElectronicsShop-service.staticwebassets.runtime.json
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\DotNetEd.CoreAdmin.dll
+C:\Users\abazi\OneDrive\Desktop\Pro-E-commerce\Src\ElectronicsShop-service\bin\Debug\net6.0\Mvc.Grid.Core.dll

@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "GcWOEYgNl0EaYByKIAQULG+ft9qexezq+a975Nrp/twCnu5fWEXDAbedrmmyCIeupWCihRLlyaDzK6xW4H02Yw==",
+  "dgSpecHash": "t8plwP+eiXI2hd7DR6A+f+58EkCj9kbKp6j9QHPMLSMlh/qPIp0TmA+8u7fyPjXiPgyPDJvO9QVaBttoh4NaBw==",
   "success": true,
   "projectFilePath": "C:\\Users\\abazi\\OneDrive\\Desktop\\Pro-E-commerce\\Src\\ElectronicsShop-service\\ElectronicsShop-service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\abazi\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\commongenericclasses\\8.0.0\\commongenericclasses.8.0.0.nupkg.sha512",
+    "C:\\Users\\abazi\\.nuget\\packages\\coreadmin\\2.7.0\\coreadmin.2.7.0.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.2\\fluentvalidation.dependencyinjectionextensions.11.5.2.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
@@ -53,6 +54,7 @@
     "C:\\Users\\abazi\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\mysqlconnector\\2.1.2\\mysqlconnector.2.1.2.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\newtonsoft.json\\9.0.1\\newtonsoft.json.9.0.1.nupkg.sha512",
+    "C:\\Users\\abazi\\.nuget\\packages\\nonfactors.grid.core.mvc6\\7.1.0\\nonfactors.grid.core.mvc6.7.1.0.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\6.0.2\\pomelo.entityframeworkcore.mysql.6.0.2.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\rabbitmq.client\\6.5.0\\rabbitmq.client.6.5.0.nupkg.sha512",
     "C:\\Users\\abazi\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",

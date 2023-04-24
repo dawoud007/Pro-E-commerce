@@ -10,6 +10,5 @@ namespace ElectronicsShop_service.Dtos
         public string Name { get; set; } = string.Empty;
         [Required]
         public int? DisplayOrder { get; set; }
-
     }
 }

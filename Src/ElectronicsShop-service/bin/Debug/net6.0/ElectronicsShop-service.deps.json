@@ -10,6 +10,7 @@
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CommonGenericClasses": "8.0.0",
+          "CoreAdmin": "2.7.0",
           "FluentValidation.DependencyInjectionExtensions": "11.5.2",
           "Microsoft.EntityFrameworkCore.Design": "6.0.13",
           "RabbitMQ.Client": "6.5.0",
@@ -53,6 +54,18 @@
           "lib/net6.0/Common.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.0.0"
+          }
+        }
+      },
+      "CoreAdmin/2.7.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.13",
+          "NonFactors.Grid.Core.Mvc6": "7.1.0"
+        },
+        "runtime": {
+          "lib/net6.0/DotNetEd.CoreAdmin.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -412,6 +425,14 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.1.19813"
+          }
+        }
+      },
+      "NonFactors.Grid.Core.Mvc6/7.1.0": {
+        "runtime": {
+          "lib/net6.0/Mvc.Grid.Core.dll": {
+            "assemblyVersion": "7.1.0.0",
+            "fileVersion": "7.1.0.0"
           }
         }
       },
@@ -836,6 +857,13 @@
       "path": "commongenericclasses/8.0.0",
       "hashPath": "commongenericclasses.8.0.0.nupkg.sha512"
     },
+    "CoreAdmin/2.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qwa33DYykMuQ6JCeDoIPI3NMU91MEWI35ukK/FcMCeWtNjDxuwaWoTRS8P6+vA3cF81AkuIsxCU7CH7yzK0ofw==",
+      "path": "coreadmin/2.7.0",
+      "hashPath": "coreadmin.2.7.0.nupkg.sha512"
+    },
     "FluentValidation/11.5.2": {
       "type": "package",
       "serviceable": true,
@@ -1157,6 +1185,13 @@
       "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
       "path": "newtonsoft.json/9.0.1",
       "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
+    },
+    "NonFactors.Grid.Core.Mvc6/7.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rvPZICY/Gyca1vEuQmxRXR1PHxlxYmw7JzBjAF6wdQy+bXyikT5aq2kWO+4V0wl62uV6u0fFtL6nVnl9IKniXg==",
+      "path": "nonfactors.grid.core.mvc6/7.1.0",
+      "hashPath": "nonfactors.grid.core.mvc6.7.1.0.nupkg.sha512"
     },
     "Pomelo.EntityFrameworkCore.MySql/6.0.2": {
       "type": "package",
