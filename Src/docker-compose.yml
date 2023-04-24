@@ -65,7 +65,7 @@ services:
       - ConnectionStrings__DefaultConnection=Server=shopdb;Port=3307;Database=BusinessLogicDb;Uid=root;Pwd=2510203121;
       - rabbitmq__Host=rabbitmq
     ports:
-      - 5000:5000
+      - 5001:5001
     depends_on:
       - shopdb
       - rabbitmq
