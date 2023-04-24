@@ -1,5 +1,6 @@
 
 using Authentication.Infrastructure.Models;
+using BusinessLogic.Entry.Options;
 using ElectronicsShop_service;
 using ElectronicsShop_service.BusinessLogic;
 using ElectronicsShop_service.Helpers;
@@ -18,6 +19,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
+//configure swagger gen options
+
+builder.Services.ConfigureOptions<SwaggerGenOptionsSetup>();
 
 builder.Services.AddSwaggerGen();
 
@@ -44,23 +49,20 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductUnitOfWork, ProductBusiness>();
 
 builder.Services.Configure<RabbitMqConnectionHelper>(builder.Configuration.GetSection("rabbitmq"));
-try
-{
-    MessageQueueManager messageQueueManager = new MessageQueueManager(
-        Options.Create<RabbitMqConnectionHelper>(
-            builder.Configuration.GetSection("rabbitmq").Get<RabbitMqConnectionHelper>()
-            ),
-        builder.Services.BuildServiceProvider()
-        );
-    messageQueueManager.SubscribeToUsersQueue();
-}
-catch (Exception ex)
-{
-    Console.WriteLine(ex);
-}
-
-
-
+// try
+// {
+MessageQueueManager messageQueueManager = new MessageQueueManager(
+    Options.Create<RabbitMqConnectionHelper>(
+        builder.Configuration.GetSection("rabbitmq").Get<RabbitMqConnectionHelper>()
+        ),
+    builder.Services.BuildServiceProvider()
+    );
+messageQueueManager.SubscribeToUsersQueue();
+// }
+// catch (Exception ex)
+// {
+// Console.WriteLine(ex);
+// }
 
 Jwt jwt = new();
 builder.Configuration.GetSection("Jwt").Bind(jwt);
@@ -111,6 +113,5 @@ app.UseStaticFiles();
 app.MapControllers();
 
 app.MapDefaultControllerRoute();
-
 
 app.Run();
