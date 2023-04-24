@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Authentication.Application.Queries.GetUserByUsername;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Authentication.Application.Commands.AddUserToRole;
 
 namespace Authentication.Presentation.Controllers;
 [ApiController]
@@ -45,7 +46,7 @@ public class AuthenticationController : Controller
         var loginQuery = credentials.Adapt<LoginQuery>();
         Results results = await _sender.Send(loginQuery);
 
-       
+
         if (!results.IsSuccess)
             return BadRequest(results);
 
@@ -108,6 +109,15 @@ public class AuthenticationController : Controller
     {
 
         var results = await _sender.Send(resetPasswordRequest);
+        if (!results.IsSuccess)
+            return BadRequest(results);
+        return Ok(results);
+    }
+    [HttpPost]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> AddUserToRole(AddUserToRoleCommand addUserToRoleCommand)
+    {
+        var results = await _sender.Send(addUserToRoleCommand);
         if (!results.IsSuccess)
             return BadRequest(results);
         return Ok(results);

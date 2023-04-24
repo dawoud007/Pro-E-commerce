@@ -87,14 +87,14 @@ namespace Authentication.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = "ea648712-749e-4920-acda-91d0d607cef2",
+                            Id = "a746c47a-da6d-45ad-910f-257aad147375",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b504e802-f141-4a42-8faf-cc21a063e509",
+                            ConcurrencyStamp = "e57decc0-0923-45e1-86d0-c695f878fe12",
                             Email = "Leqaa.Technical@gmail.com",
                             EmailConfirmed = true,
                             Gender = 1,
@@ -102,9 +102,9 @@ namespace Authentication.Persistence.Migrations
                             Name = "Leqaa",
                             NormalizedEmail = "LEQAA.TECHNICAL@GMAIL.COM",
                             NormalizedUserName = "LEQAA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJNSVXUZb9+D6+//1nUT8l4NQ7MyxQiRpqZ/hJeItejWjmYOqhVLFMfRX/neE0zhQA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFimV3O3DKjfh6CpdjZW8TUgrDNmtoDRWoG87HxlKx9bHfx12LmJHT20TGqGIUugkw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "73031b93-4497-4ddc-af62-e26ce7597ae9",
+                            SecurityStamp = "c09bf372-f3e5-4d78-88fc-f9be17c29bde",
                             TwoFactorEnabled = false,
                             UserName = "Leqaa"
                         });
@@ -117,6 +117,10 @@ namespace Authentication.Persistence.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -133,7 +137,9 @@ namespace Authentication.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("roles", (string)null);
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -156,7 +162,7 @@ namespace Authentication.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("roleclaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -179,7 +185,7 @@ namespace Authentication.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("userclaims", (string)null);
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -217,6 +223,18 @@ namespace Authentication.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a746c47a-da6d-45ad-910f-257aad147375",
+                            RoleId = "a746c47a-da6d-45ad-910f-257aad147375"
+                        },
+                        new
+                        {
+                            UserId = "a746c47a-da6d-45ad-910f-257aad147375",
+                            RoleId = "a746c47a-da6d-45ad-910f-257aad147376"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -236,6 +254,29 @@ namespace Authentication.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Authentication.Domain.Entities.ApplicationRole.ApplicationRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.HasDiscriminator().HasValue("ApplicationRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a746c47a-da6d-45ad-910f-257aad147375",
+                            ConcurrencyStamp = "809cb97f-998c-4403-b732-48bca5d20691",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a746c47a-da6d-45ad-910f-257aad147376",
+                            ConcurrencyStamp = "42a9435f-b69a-466b-885c-0dab6d6b0759",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

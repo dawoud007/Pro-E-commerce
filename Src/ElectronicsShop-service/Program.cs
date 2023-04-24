@@ -1,4 +1,4 @@
-
+using System.Text;
 using Authentication.Infrastructure.Models;
 using BusinessLogic.Entry.Options;
 using ElectronicsShop_service;
@@ -74,7 +74,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidAudience = jwt.Audience,
         ValidateIssuer = true,
         ValidateAudience = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Base64UrlEncoder.DecodeBytes(jwt.Key)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key)),
         ValidateIssuerSigningKey = true,
     };
 });
