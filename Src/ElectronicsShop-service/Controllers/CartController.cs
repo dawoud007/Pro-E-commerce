@@ -3,6 +3,7 @@ using CommonGenericClasses;
 using ElectronicsShop_service.Dtos;
 using ElectronicsShop_service.Interfaces;
 using ElectronicsShop_service.Models;
+using ElectronicsShop_service.Models.VM;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,23 @@ namespace ElectronicsShop_service.Controllers
             _cartRepository = cartRepository;
             _customerRepository = customerRepository;
         }
+
+        [HttpGet]
+        public async Task <IActionResult> ShoppingCart()
+        {
+            var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            Customer customer=( await _customerRepository.Get(c=>c.UserName==username,null,"")).FirstOrDefault()!;
+
+            var  cartVM = new CartVM()
+            {
+                ListCart = await _cartRepository.Get(u => u.CustomerId == customer.Id, null, "Product"),
+                
+            };
+          
+            return Ok(cartVM);
+        }
+
+
         [HttpPost]
      public async Task<string> RemoveFromCart([FromQuery] Guid? productId)
         {
