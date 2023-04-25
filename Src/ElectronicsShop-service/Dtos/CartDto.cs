@@ -8,7 +8,7 @@ namespace ElectronicsShop_service.Dtos
     public class CartDto : BaseDto
     {
 
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
      
         public int Count { get; set; }
