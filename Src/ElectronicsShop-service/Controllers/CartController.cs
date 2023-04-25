@@ -24,9 +24,9 @@ namespace ElectronicsShop_service.Controllers
             IProductRepository productRepository
             , ICartRepository cartRepository
             , ICustomerRepository customerRepository
-            
-            
-            
+
+
+
             , IMapper mapper, IValidator<Cart> validator) : base(unitOfWork, mapper, validator)
         {
 
@@ -36,23 +36,23 @@ namespace ElectronicsShop_service.Controllers
         }
 
         [HttpGet]
-        public async Task <IActionResult> ShoppingCart()
+        public async Task<IActionResult> ShoppingCart()
         {
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-            Customer customer=( await _customerRepository.Get(c=>c.UserName==username,null,"")).FirstOrDefault()!;
+            Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
 
-            var  cartVM = new CartVM()
+            var cartVM = new CartVM()
             {
                 ListCart = await _cartRepository.Get(u => u.CustomerId == customer.Id, null, "Product"),
-                
+
             };
-          
-            return Ok(cartVM);
+
+            return Ok(_mapper.Map<CartVMDto>(cartVM));
         }
 
 
         [HttpPost]
-     public async Task<string> RemoveFromCart([FromQuery] Guid? productId)
+        public async Task<string> RemoveFromCart([FromQuery] Guid? productId)
         {
             if (productId! == null)
             {
@@ -71,24 +71,24 @@ namespace ElectronicsShop_service.Controllers
         {
 
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-            Customer customer=(await _customerRepository.Get(u=>u.UserName== username)).FirstOrDefault()!;
+            Customer customer = (await _customerRepository.Get(u => u.UserName == username)).FirstOrDefault()!;
             /*var cart = (await _cartRepository.Get(c=>c.CustomerId==customer.Id,null,"")).FirstOrDefault()!;*/
 
             await _cartRepository.RemoveAsync(c => c.CustomerId == customer.Id);
 
             await _cartRepository.Save();
             return $"cart deleted for {customer.Name}";
-           
+
 
         }
 
         [HttpPost]
-        public async Task<string> Plus([FromQuery]Guid cartId)
+        public async Task<string> Plus([FromQuery] Guid cartId)
         {
-            Cart cart =  await _cartRepository.GetByIdAsync(cartId);
+            Cart cart = await _cartRepository.GetByIdAsync(cartId);
             _cartRepository.IncrementCount(cart, 1);
             await _cartRepository.Save();
-            return"item icreased by one";
+            return "item icreased by one";
         }
         [HttpPost]
         public async Task<string> Minus(int cartId)

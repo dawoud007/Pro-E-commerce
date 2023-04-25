@@ -38,7 +38,7 @@ public class ProductController : BaseController<Product, ProductDto>
     [HttpGet]
     public async Task<IActionResult> FetchProductsByCategory(string category)
     {
-        if (category== null)
+        if (category == null)
         {
             return BadRequest(ModelState);
         }
@@ -50,6 +50,7 @@ public class ProductController : BaseController<Product, ProductDto>
             return NotFound();
         }
         var products = await _productRepository.Get(p => p.categoryID == Category.Id, null, "");
-        return Ok(products);
+
+        return Ok(_mapper.Map<List<ProductDto>>(products));
     }
 }

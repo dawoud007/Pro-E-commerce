@@ -13,28 +13,28 @@ public class Product : BaseEntity
     }
     public int? code { get; set; }
 
-    public string Name { get; set; } = "";
+    public string Name { get; set; } = string.Empty;
 
     public Guid? categoryID { get; set; }
- 
+
     public Category? category { get; set; }
 
-    public string? Brand { get; set; }
-    public string? Manufacturer { get; set; }
-    public string? color { get; set; }
-    public string? description { get; set; }
-    public string? image { get; set; }
+    public string Brand { get; set; } = string.Empty;
+    public string Manufacturer { get; set; } = string.Empty;
+    public string color { get; set; } = string.Empty;
+    public string description { get; set; } = string.Empty;
+    public byte[]? image { get; set; }
 
     public float Rating { get; set; }
 
-    public string? status { get; set; }
+    public string status { get; set; } = string.Empty;
 
     public Guid? CartId { get; set; }
 
 
     public Cart? Cart { get; set; }
 
-    public ICollection<Customer> Customers { get; set;}
+    public ICollection<Customer> Customers { get; set; }
 
 
 
