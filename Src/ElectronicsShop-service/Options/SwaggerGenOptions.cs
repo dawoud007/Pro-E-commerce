@@ -1,6 +1,9 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace BusinessLogic.Entry.Options;
 public class SwaggerGenOptionsSetup : IConfigureOptions<SwaggerGenOptions>
@@ -32,3 +35,14 @@ public class SwaggerGenOptionsSetup : IConfigureOptions<SwaggerGenOptions>
             });
     }
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -11,9 +11,12 @@ public class CustomerConfiguration : BaseConfiguration<Customer>
         base.Configure(builder);
 
         builder
-      .HasOne(c => c.Cart)
-      .WithOne(c => c.Customer)
-      .HasForeignKey<Cart>(c => c.CustomerId);
+       .HasMany(c => c.Carts) // Customer has many Carts
+       .WithOne(c => c.Customer)
+       .HasForeignKey(c => c.CustomerId)
+       .IsRequired();
+
+
 
 
 

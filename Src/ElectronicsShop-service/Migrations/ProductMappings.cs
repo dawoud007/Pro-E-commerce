@@ -8,6 +8,7 @@ public class ProductMappings : Profile
     public ProductMappings()
     {
         CreateMap<Product, ProductDto>();
-        CreateMap<ProductDto, Product>();
+        CreateMap<ProductDto, Product>()
+        .ReverseMap();
     }
 }

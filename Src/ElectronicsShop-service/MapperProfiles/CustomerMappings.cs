@@ -8,6 +8,7 @@ public class MapperProfiles : Profile
     public MapperProfiles()
     {
         CreateMap<Customer, CustomerDto>();
-        CreateMap<CustomerDto, Customer>();
+        CreateMap<CustomerDto, Customer>()
+        .ReverseMap();
     }
 }

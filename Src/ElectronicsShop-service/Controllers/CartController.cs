@@ -8,13 +8,15 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace ElectronicsShop_service.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
 
-    public class CartController : BaseController<Cart, CartDto>
+    public class CartController : BaseController<Cart, CartControllerVMDto>
     {
 
         private readonly IProductRepository _productRepository;
@@ -35,19 +37,63 @@ namespace ElectronicsShop_service.Controllers
             _customerRepository = customerRepository;
         }
 
+
+  /*      public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
+        {
+            Product product = await _productRepository.GetByIdAsync(entityViewModel.ProductId);
+            Customer customer = await _customerRepository.GetByIdAsync(entityViewModel.customerId);
+            var va = new Cart()
+            {
+                Id= Guid.NewGuid(),
+            ProductId = product.Id,
+                Product= product,
+                Price = product.price,
+                CustomerId=customer.Id,
+                Count=1
+                
+            };
+                
+            return Ok(va);
+        }*/
+
+
         [HttpGet]
         public async Task<IActionResult> ShoppingCart()
         {
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
 
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
             var cartVM = new CartVM()
             {
                 ListCart = await _cartRepository.Get(u => u.CustomerId == customer.Id, null, "Product"),
 
             };
 
-            return Ok(_mapper.Map<CartVMDto>(cartVM));
+            foreach(var item in cartVM.ListCart)
+            {
+                Product product= (await _productRepository.Get(p=>p.Id== item.ProductId, null,"")).FirstOrDefault()!;
+                item.Price = product.price;
+               
+
+                
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+
+            string jsonString = JsonSerializer.Serialize(cartVM, options);
+
+            return Ok(jsonString);
+
+          /*  return Ok(_mapper.Map<CartVMDto>(cartVM));*/
         }
 
 
@@ -86,6 +132,11 @@ namespace ElectronicsShop_service.Controllers
         public async Task<string> Plus([FromQuery] Guid cartId)
         {
             Cart cart = await _cartRepository.GetByIdAsync(cartId);
+
+            if(cart == null)
+            {
+                
+            }
             _cartRepository.IncrementCount(cart, 1);
             await _cartRepository.Save();
             return "item icreased by one";

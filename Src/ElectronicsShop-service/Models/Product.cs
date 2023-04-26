@@ -31,6 +31,8 @@ public class Product : BaseEntity
 
     public Guid? CartId { get; set; }
 
+    public float price { get; set; }
+
 
     public Cart? Cart { get; set; }
 

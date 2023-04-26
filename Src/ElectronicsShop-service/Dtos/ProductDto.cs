@@ -13,9 +13,10 @@ public class ProductDto : BaseDto
     public string? Manufacturer { get; set; }
     public string? color { get; set; }
     public string? description { get; set; }
-    public string? image { get; set; }
+    public byte[]? image { get; set; }
 
     public float Rating { get; set; }
+    public float price { get; set; }
 
     public string? status { get; set; }
 

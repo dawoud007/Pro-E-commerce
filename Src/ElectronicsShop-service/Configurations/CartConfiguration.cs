@@ -9,8 +9,14 @@ public class CartConfiguration : BaseConfiguration<Cart>
     public override void Configure(EntityTypeBuilder<Cart> builder)
     {
         base.Configure(builder);
-      builder .HasMany(p => p.Products)
-        .WithOne(c => c.Cart)
-        .HasForeignKey(p => p.CartId);
+        builder.HasOne(c => c.Product)
+                 .WithOne(p => p.Cart)
+                 .HasForeignKey<Cart>(c => c.ProductId)
+                 .IsRequired();
+
+
+
+
+        
     }
 }

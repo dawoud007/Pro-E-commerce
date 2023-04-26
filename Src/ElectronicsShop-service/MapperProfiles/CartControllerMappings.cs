@@ -4,12 +4,11 @@ using ElectronicsShop_service.Models;
 using ElectronicsShop_service.Models.VM;
 
 namespace ElectronicsShop_service.MapperProfiles;
-public class CategoryMappings : Profile
+public class CartControllerMappings : Profile
 {
-    public CategoryMappings()
+    public CartControllerMappings()
     {
-        CreateMap<Category, CategoryDto>();
-        CreateMap<CategoryDto, Category>()
-        .ReverseMap();
+        CreateMap<Cart, CartControllerVMDto>().ReverseMap();
     }
 }
+

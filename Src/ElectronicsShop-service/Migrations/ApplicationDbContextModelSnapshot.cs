@@ -31,26 +31,30 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 25, 11, 46, 10, 586, DateTimeKind.Local).AddTicks(7027));
+                        .HasDefaultValue(new DateTime(2023, 4, 25, 23, 26, 30, 552, DateTimeKind.Local).AddTicks(87));
 
                     b.Property<Guid>("CustomerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("CustomerId1")
                         .HasColumnType("char(36)");
 
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
                     b.Property<Guid?>("ProductId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("ProductId1")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("CustomerId1")
                         .IsUnique();
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("Carts");
                 });
@@ -64,7 +68,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 25, 11, 46, 10, 588, DateTimeKind.Local).AddTicks(1727));
+                        .HasDefaultValue(new DateTime(2023, 4, 25, 23, 26, 30, 552, DateTimeKind.Local).AddTicks(4382));
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
@@ -91,7 +95,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 25, 11, 46, 10, 588, DateTimeKind.Local).AddTicks(3258));
+                        .HasDefaultValue(new DateTime(2023, 4, 25, 23, 26, 30, 552, DateTimeKind.Local).AddTicks(6601));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -159,7 +163,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 25, 11, 46, 10, 590, DateTimeKind.Local).AddTicks(3047));
+                        .HasDefaultValue(new DateTime(2023, 4, 25, 23, 26, 30, 557, DateTimeKind.Local).AddTicks(9321));
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()
@@ -189,13 +193,14 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<byte[]>("image")
                         .HasColumnType("longblob");
 
+                    b.Property<float>("price")
+                        .HasColumnType("float");
+
                     b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("categoryID");
 
@@ -205,14 +210,20 @@ namespace ElectronicsShop_service.Migrations
             modelBuilder.Entity("ElectronicsShop_service.Models.Cart", b =>
                 {
                     b.HasOne("ElectronicsShop_service.Models.Customer", "Customer")
-                        .WithOne("Cart")
-                        .HasForeignKey("ElectronicsShop_service.Models.Cart", "CustomerId")
+                        .WithMany("Carts")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ElectronicsShop_service.Models.Customer", null)
+                        .WithOne("Cart")
+                        .HasForeignKey("ElectronicsShop_service.Models.Cart", "CustomerId1");
+
                     b.HasOne("ElectronicsShop_service.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId1");
+                        .WithOne("Cart")
+                        .HasForeignKey("ElectronicsShop_service.Models.Cart", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -240,23 +251,12 @@ namespace ElectronicsShop_service.Migrations
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Product", b =>
                 {
-                    b.HasOne("ElectronicsShop_service.Models.Cart", "Cart")
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("ElectronicsShop_service.Models.Category", "category")
                         .WithMany("Products")
                         .HasForeignKey("categoryID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Cart");
-
                     b.Navigation("category");
-                });
-
-            modelBuilder.Entity("ElectronicsShop_service.Models.Cart", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Category", b =>
@@ -265,6 +265,13 @@ namespace ElectronicsShop_service.Migrations
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Customer", b =>
+                {
+                    b.Navigation("Cart");
+
+                    b.Navigation("Carts");
+                });
+
+            modelBuilder.Entity("ElectronicsShop_service.Models.Product", b =>
                 {
                     b.Navigation("Cart");
                 });

@@ -16,4 +16,5 @@ public class Customer : BaseEntity
     public string UserName { get; set; } = string.Empty;
     public Cart? Cart { get; set; }
     public ICollection<Product> Products { get; set; }
+    public ICollection<Cart> Carts { get; set; }
 }

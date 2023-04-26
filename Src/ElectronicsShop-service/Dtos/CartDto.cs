@@ -10,14 +10,14 @@ namespace ElectronicsShop_service.Dtos
 
         public Guid ProductId { get; set; }
 
-
-        public int Count { get; set; }
+       /* public byte[]? image { get; set; }*/
+        public int Count { get; set; } = 1;
 
         public Guid? customerId { get; set; }
 
 
 
-        public double Price { get; set; }
+        public float Price { get; set; }
 
     }
 }
