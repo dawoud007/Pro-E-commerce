@@ -103,14 +103,14 @@ namespace ElectronicsShop_service.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<string> RemoveFromCart([FromQuery] Guid? productId)
+        public async Task<string> RemoveFromCart([FromQuery] Guid? CartID)
         {
-            if (productId! == null)
+            if (CartID! == null)
             {
                 return "enter valid product ";
             }
 
-            await _cartRepository.RemoveByIdAsync(productId);
+            await _cartRepository.RemoveByIdAsync(CartID);
             await _cartRepository.Save();
             return "product deleted successfully";
 
