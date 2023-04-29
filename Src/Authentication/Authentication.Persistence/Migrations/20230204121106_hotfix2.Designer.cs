@@ -3,6 +3,7 @@ using System;
 using Authentication.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Authentication.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230204121106_hotfix2")]
+    partial class hotfix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +41,7 @@ namespace Authentication.Persistence.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Gender")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -70,6 +70,9 @@ namespace Authentication.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<byte[]>("ProfileImage")
+                        .HasColumnType("longblob");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -90,26 +93,6 @@ namespace Authentication.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "7ccb0dbc-d6eb-49d5-acc5-0a8e8edf0562",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "93fe0601-70c3-460b-b25e-44e5e2465577",
-                            Email = "Leqaa.Technical@gmail.com",
-                            EmailConfirmed = true,
-                            Gender = 1,
-                            LockoutEnabled = false,
-                            Name = "Leqaa",
-                            NormalizedEmail = "LEQAA.TECHNICAL@GMAIL.COM",
-                            NormalizedUserName = "LEQAA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEY/U+TJJH9maa1kyfDK6BefsxtHw6v5YUgMjWlZmjN1hYHUysb6BzTdEUk6CXeY1A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "cec4f653-257f-4853-b9bc-11bee51b56ad",
-                            TwoFactorEnabled = false,
-                            UserName = "Leqaa"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -158,7 +141,7 @@ namespace Authentication.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("roleclaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -181,7 +164,7 @@ namespace Authentication.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("userclaims", (string)null);
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>

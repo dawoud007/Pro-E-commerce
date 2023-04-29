@@ -3,6 +3,7 @@ using System;
 using Authentication.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Authentication.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230227083823_AddedSeedUser")]
+    partial class AddedSeedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +41,7 @@ namespace Authentication.Persistence.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Gender")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -94,9 +94,9 @@ namespace Authentication.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7ccb0dbc-d6eb-49d5-acc5-0a8e8edf0562",
+                            Id = "ea648712-749e-4920-acda-91d0d607cef2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "93fe0601-70c3-460b-b25e-44e5e2465577",
+                            ConcurrencyStamp = "b504e802-f141-4a42-8faf-cc21a063e509",
                             Email = "Leqaa.Technical@gmail.com",
                             EmailConfirmed = true,
                             Gender = 1,
@@ -104,9 +104,9 @@ namespace Authentication.Persistence.Migrations
                             Name = "Leqaa",
                             NormalizedEmail = "LEQAA.TECHNICAL@GMAIL.COM",
                             NormalizedUserName = "LEQAA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEY/U+TJJH9maa1kyfDK6BefsxtHw6v5YUgMjWlZmjN1hYHUysb6BzTdEUk6CXeY1A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJNSVXUZb9+D6+//1nUT8l4NQ7MyxQiRpqZ/hJeItejWjmYOqhVLFMfRX/neE0zhQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cec4f653-257f-4853-b9bc-11bee51b56ad",
+                            SecurityStamp = "73031b93-4497-4ddc-af62-e26ce7597ae9",
                             TwoFactorEnabled = false,
                             UserName = "Leqaa"
                         });
