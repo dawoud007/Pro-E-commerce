@@ -18,7 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -117,7 +117,7 @@ app.UseStaticFiles();
 
 app.MapControllers();
 
-app.Use(async (context, next) =>
+/*app.Use(async (context, next) =>
 {
     if (context.Request.Path == "/coreadmin" && context.Request.Query["password"] != "iamthebigadminhere")
     {
@@ -126,7 +126,7 @@ app.Use(async (context, next) =>
     }
 
     await next(context);
-});
+});*/
 
 app.MapDefaultControllerRoute();
 

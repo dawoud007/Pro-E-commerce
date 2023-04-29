@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectronicsShop_service.Controllers
 {
@@ -38,24 +39,25 @@ namespace ElectronicsShop_service.Controllers
         }
 
 
-  /*      public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
-        {
-            Product product = await _productRepository.GetByIdAsync(entityViewModel.ProductId);
-            Customer customer = await _customerRepository.GetByIdAsync(entityViewModel.customerId);
-            var va = new Cart()
-            {
-                Id= Guid.NewGuid(),
-            ProductId = product.Id,
-                Product= product,
-                Price = product.price,
-                CustomerId=customer.Id,
-                Count=1
-                
-            };
-                
-            return Ok(va);
-        }*/
+        /*      public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
+              {
+                  Product product = await _productRepository.GetByIdAsync(entityViewModel.ProductId);
+                  Customer customer = await _customerRepository.GetByIdAsync(entityViewModel.customerId);
+                  var va = new Cart()
+                  {
+                      Id= Guid.NewGuid(),
+                  ProductId = product.Id,
+                      Product= product,
+                      Price = product.price,
+                      CustomerId=customer.Id,
+                      Count=1
 
+                  };
+
+                  return Ok(va);
+              }*/
+
+        [Authorize]
 
         [HttpGet]
         public async Task<IActionResult> ShoppingCart()
@@ -78,25 +80,28 @@ namespace ElectronicsShop_service.Controllers
             {
                 Product product= (await _productRepository.Get(p=>p.Id== item.ProductId, null,"")).FirstOrDefault()!;
                 item.Price = product.price;
+                item.Product=product;
                
 
                 
             }
-
+/*
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 WriteIndented = true
             };
+*/
+ /*           string jsonString = JsonSerializer.Serialize(cartVM);
 
-            string jsonString = JsonSerializer.Serialize(cartVM, options);
+            return Ok(jsonString);*/
 
-            return Ok(jsonString);
-
-          /*  return Ok(_mapper.Map<CartVMDto>(cartVM));*/
+            return Ok(_mapper.Map<CartVMDto>(cartVM).ListCart.Select(c=>c.Product));
         }
 
 
+
+        [Authorize]
         [HttpPost]
         public async Task<string> RemoveFromCart([FromQuery] Guid? productId)
         {
@@ -111,7 +116,7 @@ namespace ElectronicsShop_service.Controllers
 
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<string> removeAllfromCart()
         {
@@ -127,7 +132,7 @@ namespace ElectronicsShop_service.Controllers
 
 
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<string> Plus([FromQuery] Guid cartId)
         {
@@ -141,6 +146,7 @@ namespace ElectronicsShop_service.Controllers
             await _cartRepository.Save();
             return "item icreased by one";
         }
+        [Authorize]
         [HttpPost]
         public async Task<string> Minus(int cartId)
         {
