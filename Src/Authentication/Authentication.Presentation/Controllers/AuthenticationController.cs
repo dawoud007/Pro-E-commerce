@@ -12,12 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 using Authentication.Application.Queries.GetUserByUsername;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using Authentication.Application.Commands.AddUserToRole;
 
 namespace Authentication.Presentation.Controllers;
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
-// [Authorize(AuthenticationSchemes = "Bearer")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class AuthenticationController : Controller
 {
     private readonly ISender _sender;
@@ -49,12 +48,10 @@ public class AuthenticationController : Controller
 
         if (!results.IsSuccess)
             return BadRequest(results);
-
-
-
         return Ok(results);
     }
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetUser()
     {
         string username = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
@@ -109,15 +106,6 @@ public class AuthenticationController : Controller
     {
 
         var results = await _sender.Send(resetPasswordRequest);
-        if (!results.IsSuccess)
-            return BadRequest(results);
-        return Ok(results);
-    }
-    [HttpPost]
-    [Authorize(Roles = "admin")]
-    public async Task<IActionResult> AddUserToRole(AddUserToRoleCommand addUserToRoleCommand)
-    {
-        var results = await _sender.Send(addUserToRoleCommand);
         if (!results.IsSuccess)
             return BadRequest(results);
         return Ok(results);

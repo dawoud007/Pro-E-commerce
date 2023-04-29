@@ -38,24 +38,26 @@ namespace ElectronicsShop_service.Controllers
             _customerRepository = customerRepository;
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> PostEllyShaghala([FromBody] CartPostModel entityViewModel)
+        {
+            var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
+            Product product = (await _productRepository.GetByIdAsync(entityViewModel.ProductId));
+            var va = new Cart()
+            {
+                Id = Guid.NewGuid(),
+                Product = product,
+                ProductId = product.Id,
+                Customer = customer,
+                Count = 1
+            };
+            await _cartRepository.AddAsync(va);
+            await _cartRepository.Save();
 
-        /*      public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
-              {
-                  Product product = await _productRepository.GetByIdAsync(entityViewModel.ProductId);
-                  Customer customer = await _customerRepository.GetByIdAsync(entityViewModel.customerId);
-                  var va = new Cart()
-                  {
-                      Id= Guid.NewGuid(),
-                  ProductId = product.Id,
-                      Product= product,
-                      Price = product.price,
-                      CustomerId=customer.Id,
-                      Count=1
-
-                  };
-
-                  return Ok(va);
-              }*/
+            return Ok(va);
+        }
 
         [Authorize]
 
@@ -76,27 +78,25 @@ namespace ElectronicsShop_service.Controllers
 
             };
 
-            foreach(var item in cartVM.ListCart)
+            foreach (var item in cartVM.ListCart)
             {
-                Product product= (await _productRepository.Get(p=>p.Id== item.ProductId, null,"")).FirstOrDefault()!;
+                Product product = (await _productRepository.Get(p => p.Id == item.ProductId, null, "")).FirstOrDefault()!;
                 item.Price = product.price;
-                item.Product=product;
-               
+                item.Product = product;
 
-                
             }
-/*
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
-            };
-*/
- /*           string jsonString = JsonSerializer.Serialize(cartVM);
+            /*
+                        var options = new JsonSerializerOptions
+                        {
+                            ReferenceHandler = ReferenceHandler.Preserve,
+                            WriteIndented = true
+                        };
+            */
+            /*           string jsonString = JsonSerializer.Serialize(cartVM);
 
-            return Ok(jsonString);*/
+                       return Ok(jsonString);*/
 
-            return Ok(_mapper.Map<CartVMDto>(cartVM).ListCart.Select(c=>c.Product));
+            return Ok(_mapper.Map<CartVMDto>(cartVM).ListCart.Select(c => c.Product));
         }
 
 
@@ -138,9 +138,9 @@ namespace ElectronicsShop_service.Controllers
         {
             Cart cart = await _cartRepository.GetByIdAsync(cartId);
 
-            if(cart == null)
+            if (cart == null)
             {
-                
+
             }
             _cartRepository.IncrementCount(cart, 1);
             await _cartRepository.Save();
