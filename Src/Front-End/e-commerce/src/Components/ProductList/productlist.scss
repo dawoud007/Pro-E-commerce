@@ -1,0 +1,30 @@
+@import "../../Helper/style";
+
+.productListWrapper {
+  padding: 50px 0;
+
+  .searchBar {
+    border-radius: 5px;
+    border-color: $black;
+    padding: 3px 10px;
+    margin-right: 5px;
+    transition: 0.5s ease-in-out;
+    outline: none;
+  }
+
+  .searchWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg{
+      cursor: pointer;
+    }
+  }
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33%);
+  gap: 40px;
+  padding-top: 30px;
+}

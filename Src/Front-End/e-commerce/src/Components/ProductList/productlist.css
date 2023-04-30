@@ -1,0 +1,26 @@
+.productListWrapper {
+  padding: 50px 0;
+}
+.productListWrapper .searchBar {
+  border-radius: 5px;
+  border-color: #000000;
+  padding: 3px 10px;
+  margin-right: 5px;
+  transition: 0.5s ease-in-out;
+  outline: none;
+}
+.productListWrapper .searchWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.productListWrapper .searchWrapper svg {
+  cursor: pointer;
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33%);
+  gap: 40px;
+  padding-top: 30px;
+}/*# sourceMappingURL=productlist.css.map */

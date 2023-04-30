@@ -1,0 +1,16 @@
+.emptyCart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+
+  img {
+    max-width: 700px;
+    width: 100%;
+    height: auto;
+  }
+  .btn-empty{
+    align-self: center;
+  }
+}

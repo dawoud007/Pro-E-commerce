@@ -1,0 +1,48 @@
+@import "../../Helper/style";
+
+.detailWrapper {
+  margin-top: 80px;
+  min-height: calc(100vh - 140px);
+}
+
+.mainDetailWrapper {
+  display: flex;
+  gap: 50px;
+  position: relative;
+  top: 50%;
+  transform: translateY(calc(50% - 80px));
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 40px 20px;
+  .btn {
+    background-color: $skyBlue;
+    border: none;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $nevyBlue;
+    }
+  }
+}
+
+.imageWrapper {
+  img {
+    transition: 0.4s ease-in;
+    max-width: 300px;
+    max-height: 300px;
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.4s ease-in-out;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn{
+  align-self: flex-start;
+}
