@@ -50,12 +50,18 @@ namespace ElectronicsShop_service.Controllers
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
             Product product = (await _productRepository.GetByIdAsync(entityViewModel.ProductId));
+
+            if (product == null)
+            {
+                return NotFound();
+            }
             var va = new Cart()
             {
                 Id = Guid.NewGuid(),
                 Product = product,
                 ProductId = product.Id,
                 Customer = customer,
+                CustomerId= customer.Id,
                 Count = 1
             };
             if ((await _cartRepository.Get(p=>p.ProductId==product.Id,null, "Product")).FirstOrDefault()==null)
