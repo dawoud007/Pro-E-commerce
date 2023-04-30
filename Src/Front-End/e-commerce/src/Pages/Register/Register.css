@@ -1,0 +1,74 @@
+.register {
+  height: 100vh;
+  background-color: #303435;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register .card {
+  width: 50%;
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: white;
+  border-radius: 10px;
+  height: 700px;
+  overflow: hidden;
+}
+.register .card .left {
+  flex: 1;
+  background: linear-gradient(rgba(48, 52, 53, 0.5), rgba(48, 52, 53, 0.5)), url("../../assests/img3.webp") center;
+  background-size: cover;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  color: white;
+}
+.register .card .left h1 {
+  font-size: 100px;
+  line-height: 100px;
+}
+.register .card .left span {
+  font-size: 14px;
+}
+.register .card .left button {
+  width: 50%;
+  padding: 10px;
+  border: none;
+  background-color: white;
+  color: #54b3d6;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.register .card .right {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.register .card .right h1 {
+  color: #303435;
+}
+.register .card .right form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.register .card .right form input,
+.register .card .right form select {
+  border: none;
+  border-bottom: 1px solid lightskyblue;
+  padding: 20px 10px;
+}
+.register .card .right form button {
+  width: 50%;
+  padding: 10px;
+  border: none;
+  background-color: #54b3d6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+}/*# sourceMappingURL=Register.css.map */
