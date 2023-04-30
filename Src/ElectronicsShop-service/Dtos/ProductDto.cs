@@ -9,6 +9,8 @@ public class ProductDto : BaseDto
     public string Name { get; set; } = "";
     public Guid? categoryID { get; set; }
 
+    public string? CategoryName { get; set; }
+
     public string? Brand { get; set; }
     public string? Manufacturer { get; set; }
     public string? color { get; set; }
@@ -17,7 +19,7 @@ public class ProductDto : BaseDto
 
     public float Rating { get; set; }
     public float price { get; set; }
-
+    public int? quantity { get; set; }
     public string? status { get; set; }
 
 }

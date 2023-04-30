@@ -36,6 +36,7 @@ public class Product : BaseEntity
 
     public Cart? Cart { get; set; }
 
+    public int? quantity { get; set; }
     public ICollection<Customer> Customers { get; set; }
 
 
