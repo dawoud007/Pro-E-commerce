@@ -117,16 +117,16 @@ app.UseStaticFiles();
 
 app.MapControllers();
 
-/*app.Use(async (context, next) =>
+app.Use(async (context, next) =>
 {
     if (context.Request.Path == "/coreadmin" && context.Request.Query["password"] != "iamthebigadminhere")
     {
-        context.Response.StatusCode = 403;
+        context.Response.StatusCode = 401;
         return;
     }
 
     await next(context);
-});*/
+});
 
 app.MapDefaultControllerRoute();
 

@@ -148,13 +148,14 @@ namespace ElectronicsShop_service.Controllers
         {
 
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+
             Customer customer = (await _customerRepository.Get(u => u.UserName == username)).FirstOrDefault()!;
             /*var cart = (await _cartRepository.Get(c=>c.CustomerId==customer.Id,null,"")).FirstOrDefault()!;*/
 
             await _cartRepository.RemoveRangeAsync(c => c.CustomerId == customer.Id);
 
             await _cartRepository.Save();
-            return $"cart deleted for {customer.Name}";
+            return $"cart deleted for {customer.UserName} ";
 
 
         }

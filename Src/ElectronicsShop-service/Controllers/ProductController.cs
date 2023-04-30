@@ -20,12 +20,7 @@ public class ProductController : BaseController<Product, ProductDto>
     public ProductController(
 
         IProductRepository productRepository,
-
         ICategoryRepository categoryRepository,
-
-
-
-
         IProductUnitOfWork unitOfWork,
         IMapper mapper,
         IValidator<Product> validator) : base(unitOfWork, mapper, validator)
@@ -36,51 +31,6 @@ public class ProductController : BaseController<Product, ProductDto>
         _categoryRepository = categoryRepository;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public async override Task<IActionResult> Get(Guid ProductId)
-
-    {
-        Product product = (await _productRepository.Get(p => p.Id == ProductId, null, "")).FirstOrDefault()!;
-        if (product == null)
-        {
-            return NotFound();
-        }
-        var category = await _categoryRepository.GetByIdAsync(product.categoryID);
-        var newProductDto = new ProductDto()
-        {
-            Id=product.Id,
-            code = product.code,
-            Name=product.Name,
-            categoryID= category.Id,
-            CategoryName=category.Name,
-            Brand=product.Brand,
-            Manufacturer=product.Manufacturer,
-            color=product.color,
-            description=product.description,
-            image=product.image,
-            Rating=product.Rating,
-            price=product.price,
-            status=product.status
-
-        };
-        return Ok(newProductDto);
-    }
-
-
-
-*/
     [HttpGet]
     public async Task<string> GetProductCategory(Guid ProductId)
 
@@ -94,9 +44,6 @@ public class ProductController : BaseController<Product, ProductDto>
 
         return category.Name;
     }
-
-
-
 
     [HttpGet]
     public async Task<IActionResult> FetchProductsByCategory(string category)
@@ -116,11 +63,4 @@ public class ProductController : BaseController<Product, ProductDto>
 
         return Ok(_mapper.Map<List<ProductDto>>(products));
     }
-
-
-
-
-
-
-  
 }
