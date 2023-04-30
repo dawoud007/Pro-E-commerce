@@ -12,11 +12,13 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ElectronicsShop_service.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
     public class CartController : BaseController<Cart, CartControllerVMDto>
     {
@@ -61,10 +63,10 @@ namespace ElectronicsShop_service.Controllers
                 Product = product,
                 ProductId = product.Id,
                 Customer = customer,
-                CustomerId= customer.Id,
+                CustomerId = customer.Id,
                 Count = 1
             };
-            if ((await _cartRepository.Get(p=>p.ProductId==product.Id,null, "Product")).FirstOrDefault()==null)
+            if ((await _cartRepository.Get(p => p.ProductId == product.Id, null, "Product")).FirstOrDefault() == null)
             {
                 await _cartRepository.AddAsync(va);
                 await _cartRepository.Save();
@@ -75,7 +77,7 @@ namespace ElectronicsShop_service.Controllers
             return Ok(alreadyExists);
 
 
-        
+
         }
 
 
@@ -100,25 +102,25 @@ namespace ElectronicsShop_service.Controllers
 
             };
 
-            foreach(var item in cartVM.ListCart)
+            foreach (var item in cartVM.ListCart)
             {
-                Product product= (await _productRepository.Get(p=>p.Id== item.ProductId, null,"")).FirstOrDefault()!;
+                Product product = (await _productRepository.Get(p => p.Id == item.ProductId, null, "")).FirstOrDefault()!;
                 item.Price = product.price;
-                item.Product=product;
-               
+                item.Product = product;
 
-                
+
+
             }
-/*
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
-            };
-*/
- /*           string jsonString = JsonSerializer.Serialize(cartVM);
+            /*
+                        var options = new JsonSerializerOptions
+                        {
+                            ReferenceHandler = ReferenceHandler.Preserve,
+                            WriteIndented = true
+                        };
+            */
+            /*           string jsonString = JsonSerializer.Serialize(cartVM);
 
-            return Ok(jsonString);*/
+                       return Ok(jsonString);*/
 
             return Ok(_mapper.Map<CartVMDto>(cartVM).ListCart);
         }
@@ -133,7 +135,7 @@ namespace ElectronicsShop_service.Controllers
             {
                 return "enter valid cart ";
             }
-            if(await _cartRepository.GetByIdAsync(CartID) == null)
+            if (await _cartRepository.GetByIdAsync(CartID) == null)
             {
                 return "enter a valid id cart";
             }
@@ -165,9 +167,9 @@ namespace ElectronicsShop_service.Controllers
         {
             Cart cart = await _cartRepository.GetByIdAsync(cartId);
 
-            if(cart == null)
+            if (cart == null)
             {
-                
+
             }
             _cartRepository.IncrementCount(cart, 1);
             await _cartRepository.Save();
