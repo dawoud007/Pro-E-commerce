@@ -1,0 +1,17 @@
+@import "../../Helper/style";
+
+.footer {
+  background-color: #303435;
+  color: $white;
+  height: 60px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  span{
+    cursor: pointer;
+    color: $skyBlue;
+    margin-left: 5px;
+  }
+}

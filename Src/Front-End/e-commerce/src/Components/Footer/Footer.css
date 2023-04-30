@@ -1,0 +1,15 @@
+.footer {
+  background-color: #303435;
+  color: white;
+  height: 60px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.footer span {
+  cursor: pointer;
+  color: lightskyblue;
+  margin-left: 5px;
+}/*# sourceMappingURL=Footer.css.map */

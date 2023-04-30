@@ -1,0 +1,67 @@
+@import "../../Helper/style";
+
+
+
+.sliderItem {
+  height: 450px ;
+  object-fit: cover;
+  h1{
+    color: aliceblue;
+    font-size: 48px;
+    line-height: 48px;
+  }
+  img {
+    object-fit: cover;
+    aspect-ratio: 16/9;
+  }
+}
+
+.sliderBtn {
+  background-color: $primaryColor !important;
+  border: none !important;
+  color: $black !important;
+  padding: 10px 25px !important;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+  
+
+  &:hover {
+    background-color: $nevyBlue !important;
+  }
+}
+
+  .rec-carousel-item {
+    .card {
+      margin: 20px 0 !important;
+    }
+  }
+
+  .carousel-indicators {
+    button {
+      height: 10px !important;
+      width: 10px !important;
+      border-radius: 50%;
+    }
+  }
+
+  .carousel {
+    margin-top: 80px;
+    .carousel-control-prev,
+    .carousel-control-next {
+      display: none;
+    }
+
+    .carousel-caption {
+      top: 40% !important;
+      padding-top: 0;
+    }
+  }
+
+
