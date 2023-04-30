@@ -18,7 +18,7 @@ namespace ElectronicsShop_service.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
     public class CartController : BaseController<Cart, CartControllerVMDto>
     {
@@ -30,9 +30,6 @@ namespace ElectronicsShop_service.Controllers
             IProductRepository productRepository
             , ICartRepository cartRepository
             , ICustomerRepository customerRepository
-
-
-
             , IMapper mapper, IValidator<Cart> validator) : base(unitOfWork, mapper, validator)
         {
 
