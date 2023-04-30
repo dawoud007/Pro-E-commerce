@@ -127,7 +127,7 @@ namespace ElectronicsShop_service.Controllers
 
 
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         public async Task<string> RemoveFromCart([FromQuery] Guid? CartID)
         {
@@ -145,7 +145,7 @@ namespace ElectronicsShop_service.Controllers
 
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         public async Task<string> removeAllfromCart()
         {
@@ -161,7 +161,7 @@ namespace ElectronicsShop_service.Controllers
 
 
         }
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         public async Task<string> Plus([FromQuery] Guid cartId)
         {
@@ -175,7 +175,7 @@ namespace ElectronicsShop_service.Controllers
             await _cartRepository.Save();
             return "item icreased by one";
         }
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         public async Task<string> Minus([FromQuery] Guid cartId)
         {
