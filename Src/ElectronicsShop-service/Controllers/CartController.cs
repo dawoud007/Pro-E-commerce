@@ -46,20 +46,20 @@ namespace ElectronicsShop_service.Controllers
         public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
         {
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-            Product product = await _productRepository.GetByIdAsync(entityViewModel.ProductId);
             Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
+            Product product = (await _productRepository.GetByIdAsync(entityViewModel.ProductId));
             var va = new Cart()
             {
                 Id = Guid.NewGuid(),
-                ProductId = product.Id,
                 Product = product,
-                Price = product.price,
-                CustomerId = customer.Id,
+                ProductId = product.Id,
+                Customer = customer,
                 Count = 1
-
             };
-            await _cartRepository.AddAsync(va)!;
-             _cartRepository.Save();
+            await _cartRepository.AddAsync(va);
+            await _cartRepository.Save();
+
+            return Ok(va);
 
             return Ok(va);
         }
