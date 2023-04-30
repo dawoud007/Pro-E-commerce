@@ -18,7 +18,7 @@ public class Product : BaseEntity
     public Guid? categoryID { get; set; }
 
     public Category? category { get; set; }
-
+    public string? CategoryName { get; set; }
     public string Brand { get; set; } = string.Empty;
     public string Manufacturer { get; set; } = string.Empty;
     public string color { get; set; } = string.Empty;
