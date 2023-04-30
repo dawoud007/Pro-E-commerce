@@ -61,7 +61,7 @@ namespace ElectronicsShop_service.Controllers
 
             return Ok(va);
 
-            return Ok(va);
+        
         }
 
 

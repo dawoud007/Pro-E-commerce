@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ElectronicsShop_service.Controllers;
 [ApiController]
 [Route("[controller]/[action]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+/*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]*/
 public class CategoryController : BaseController<Category, CategoryDto>
 {
     public CategoryController(ICategoryUnitOfWork unitOfWork, IMapper mapper, IValidator<Category> validator) : base(unitOfWork, mapper, validator)
