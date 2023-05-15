@@ -7,7 +7,7 @@ public class ProductDto : BaseDto
     public int? code { get; set; }
 
     public string Name { get; set; } = "";
-    public Guid? categoryID { get; set; }
+
 
     public string? CategoryName { get; set; }
 

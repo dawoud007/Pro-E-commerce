@@ -12,7 +12,7 @@ public class CategoryConfiguration : BaseConfiguration<Category>
 
         builder.HasMany(c => c.Products) // Category has many Products
             .WithOne(p => p.category) // Product has one Category
-            .HasForeignKey(p => p.categoryID) // Product's foreign key is CategoryId
+            // Product's foreign key is CategoryId
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

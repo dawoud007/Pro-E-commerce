@@ -12,7 +12,7 @@ public class Product : BaseEntity
 
     public string Name { get; set; } = string.Empty;
 
-    public Guid? categoryID { get; set; }
+
 
     public Category? category { get; set; }
     public string CategoryName { get; set; } = string.Empty;
