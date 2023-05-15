@@ -102,7 +102,7 @@ namespace ElectronicsShop_service.Controllers
             foreach (var item in cartVM.ListCart)
             {
                 Product product = (await _productRepository.Get(p => p.Id == item.ProductId, null, "")).FirstOrDefault()!;
-                item.Price = product.price;
+                item.Price = product.Price;
                 item.Product = product;
 
 

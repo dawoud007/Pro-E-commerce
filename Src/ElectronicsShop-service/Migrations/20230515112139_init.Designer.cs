@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicsShop_service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230430031126_addQuantityToProduct")]
-    partial class addQuantityToProduct
+    [Migration("20230515112139_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 11, 26, 807, DateTimeKind.Local).AddTicks(5986));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 21, 39, 738, DateTimeKind.Local).AddTicks(796));
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("char(36)");
@@ -70,7 +70,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 11, 26, 807, DateTimeKind.Local).AddTicks(9723));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 21, 39, 738, DateTimeKind.Local).AddTicks(3708));
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
@@ -97,7 +97,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 11, 26, 808, DateTimeKind.Local).AddTicks(2367));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 21, 39, 738, DateTimeKind.Local).AddTicks(5440));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -162,10 +162,14 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<Guid?>("CartId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 11, 26, 812, DateTimeKind.Local).AddTicks(9436));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 21, 39, 742, DateTimeKind.Local).AddTicks(4125));
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()
@@ -175,13 +179,10 @@ namespace ElectronicsShop_service.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("float");
-
                     b.Property<Guid?>("categoryID")
                         .HasColumnType("char(36)");
 
-                    b.Property<int?>("code")
+                    b.Property<int>("code")
                         .HasColumnType("int");
 
                     b.Property<string>("color")

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicsShop_service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230430031729_updateproduct")]
-    partial class updateproduct
+    [Migration("20230515112349_fix")]
+    partial class fix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 25, DateTimeKind.Local).AddTicks(8505));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 23, 49, 54, DateTimeKind.Local).AddTicks(1950));
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("char(36)");
@@ -41,8 +41,8 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<Guid?>("CustomerId1")
                         .HasColumnType("char(36)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<Guid?>("ProductId")
                         .IsRequired()
@@ -70,7 +70,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 26, DateTimeKind.Local).AddTicks(4952));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 23, 49, 54, DateTimeKind.Local).AddTicks(7648));
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
@@ -97,7 +97,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 26, DateTimeKind.Local).AddTicks(7319));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 23, 49, 55, DateTimeKind.Local).AddTicks(1198));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -163,12 +163,13 @@ namespace ElectronicsShop_service.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 30, DateTimeKind.Local).AddTicks(6991));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 14, 23, 49, 59, DateTimeKind.Local).AddTicks(6681));
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()
@@ -178,13 +179,13 @@ namespace ElectronicsShop_service.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<Guid?>("categoryID")
                         .HasColumnType("char(36)");
 
-                    b.Property<int?>("code")
+                    b.Property<int>("code")
                         .HasColumnType("int");
 
                     b.Property<string>("color")
@@ -197,9 +198,6 @@ namespace ElectronicsShop_service.Migrations
 
                     b.Property<byte[]>("image")
                         .HasColumnType("longblob");
-
-                    b.Property<float>("price")
-                        .HasColumnType("float");
 
                     b.Property<int?>("quantity")
                         .HasColumnType("int");

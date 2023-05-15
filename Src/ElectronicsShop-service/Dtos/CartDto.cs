@@ -19,7 +19,7 @@ namespace ElectronicsShop_service.Dtos
 
 
 
-        public float Price { get; set; }
+        public decimal Price { get; set; }
 
     }
 }

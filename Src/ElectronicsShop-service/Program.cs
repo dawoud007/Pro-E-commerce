@@ -1,4 +1,3 @@
-using System.Net;
 using System.Text;
 using Authentication.Infrastructure.Models;
 using BusinessLogic.Entry.Options;
@@ -11,7 +10,6 @@ using ElectronicsShop_service.Repositories;
 using ElectronicsShop_service.Validations;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -50,20 +48,20 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductUnitOfWork, ProductBusiness>();
 
 builder.Services.Configure<RabbitMqConnectionHelper>(builder.Configuration.GetSection("rabbitmq"));
-// try
-// {
-MessageQueueManager messageQueueManager = new MessageQueueManager(
-    Options.Create<RabbitMqConnectionHelper>(
-        builder.Configuration.GetSection("rabbitmq").Get<RabbitMqConnectionHelper>()
-        ),
-    builder.Services.BuildServiceProvider()
-    );
-messageQueueManager.SubscribeToUsersQueue();
-// }
-// catch (Exception ex)
-// {
-// Console.WriteLine(ex);
-// }
+try
+{
+    MessageQueueManager messageQueueManager = new MessageQueueManager(
+        Options.Create<RabbitMqConnectionHelper>(
+            builder.Configuration.GetSection("rabbitmq").Get<RabbitMqConnectionHelper>()
+            ),
+        builder.Services.BuildServiceProvider()
+        );
+    messageQueueManager.SubscribeToUsersQueue();
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex);
+}
 
 Jwt jwt = new();
 builder.Configuration.GetSection("Jwt").Bind(jwt);
@@ -119,7 +117,7 @@ app.MapControllers();
 
 app.Use(async (context, next) =>
 {
-    if (context.Request.Path == "/coreadmin" && context.Request.Query["password"] != "iamthebigadminhere")
+    if ((context.Request.Path == "/CoreAdmin" || context.Request.Path == "/CoreAdminData") && context.Request.Query["password"] != "iamthebigadminhere")
     {
         context.Response.StatusCode = 401;
         return;
