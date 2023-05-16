@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Login.css";
 import { AuthContext } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 
 function Login() {
-  const { login, currentUser } = useContext(AuthContext);
+  const { login, currentUser, loading } = useContext(AuthContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
@@ -17,6 +18,10 @@ function Login() {
   useEffect(() => {
     currentUser?.token && navigate("/");
   }, [currentUser]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="login">

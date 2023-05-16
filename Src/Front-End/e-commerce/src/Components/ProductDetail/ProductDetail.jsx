@@ -5,18 +5,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
 import "./productdetail.css";
-import { addToCart } from "../../Redux/CartSlice";
+import { ShoppingCart, addToCart, increaseProduct } from "../../Redux/CartSlice";
 import { fetchProduct } from "../../Redux/ProductSlice";
 import { STATUS } from "../../Helper/Status";
+import { getCookies } from "../../Custom/useCookies";
+import noitem from '../../assests/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'
+
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, status, error } = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.cart);
+  const token = getCookies('token')
+
 
   useEffect(() => {
     dispatch(fetchProduct(id));
+    dispatch(ShoppingCart({token: token}))
   }, []);
 
   if (status === STATUS.LOADING) {
@@ -27,8 +34,11 @@ const ProductDetail = () => {
     return <h2>{error}</h2>;
   }
 
-  const productHandler = () => {
-    dispatch(addToCart(product));
+  const productHandler = (id) => {
+    const idArr = products.map(obj => obj.productId);
+    const cart = products.find((cart) => cart.productId == id)
+    idArr.includes(id) ? dispatch(increaseProduct({token: token, id: cart.id})) : dispatch(addToCart({token: token, data: id}))
+    
     toast.success(`${product?.name.slice(0, 20)} is added to cart`, {
       autoClose: 1000,
     });
@@ -48,7 +58,7 @@ const ProductDetail = () => {
       <div className="mainDetailWrapper">
         <div className="imageWrapper">
           <img
-            src={"data:image/png;base64," + product?.image}
+            src={product.image ? "data:image/png;base64," + product?.image : noitem}
             alt="product-img"
           />
         </div>
@@ -58,10 +68,10 @@ const ProductDetail = () => {
           <h6 className="text-success">
             {product?.rating?.count > 1 && "In Stock"}
           </h6>
-          <h6>Category: {product?.category}</h6>
+          <h6>Category: {product?.categoryName}</h6>
           <p className="py-1">{product?.description}</p>
           <h5>Price: ${product?.price}</h5>
-          <button className="btn btn-primary mt-2" onClick={productHandler}>
+          <button className="btn btn-primary mt-2" onClick={() => productHandler(product.id)}>
             Add to Cart
           </button>
         </div>

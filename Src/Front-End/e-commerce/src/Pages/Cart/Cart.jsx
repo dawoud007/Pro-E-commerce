@@ -3,60 +3,81 @@ import { useDispatch, useSelector } from "react-redux";
 import "./cart.css";
 import EmptyCart from "../../Components/EmptyCart/EmptyCart";
 import { toast } from "react-toastify";
-import { RemoveAllFromCart, RemoveFromCart, ShoppingCart, decreaseProduct, increaseProduct } from "../../Redux/CartSlice";
+import noitem from '../../assests/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'
+import {
+  RemoveAllFromCart,
+  RemoveFromCart,
+  ShoppingCart,
+  decreaseProduct,
+  increaseProduct,
+} from "../../Redux/CartSlice";
 import { getCookies } from "../../Custom/useCookies";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { products, status } = useSelector((state) => state.cart);
-  const [count, setCount] = useState(0)
+  const [listProducts, setListProducts] = useState([]);
+  const [count, setCount] = useState(0);
   const token = getCookies("token");
 
   console.log(products);
 
-  const totalPrice = products.reduce(
-    (a, c) => a + c.count * c.price,
-    0
-  );
+  const totalPrice = listProducts.reduce((a, c) => a + c.count * c.price, 0);
 
   useEffect(() => {
-    dispatch(ShoppingCart({token: token}))
-  }, [])
+    dispatch(ShoppingCart({ token: token }));
+  }, []);
+
+  useEffect(() => {
+    setListProducts(products);
+  }, [products]);
 
   const removeProductHandler = (product) => {
-    console.log(product);
-    const updatedItems = products.filter(item => item.id !== product.id);
-    this.setState({items: updatedItems});
-    dispatch(RemoveFromCart({id: product.id, token: token}));
+    const newCarts = listProducts.filter((item) => item.id != product.id);
+    setListProducts(newCarts);
+    dispatch(RemoveFromCart({ id: product.id, token: token }));
     toast.warning(`${product.product.name.slice(0, 20)} is removed from cart`, {
       autoClose: 1000,
     });
   };
 
-  const removeAllProduct = () => {
-    dispatch(RemoveAllFromCart({token: token}));
-    toast.error("Your Cart is now empty", {
-      autoClose: 1000,
-    });
-  };
-
   const increasedProduct = (product) => {
-    setCount(product.count + 1)
-    dispatch(increaseProduct({id: product.id, token: token}));
+    const cartIndex = listProducts.findIndex((item) => item.id === product.id);
+    if (cartIndex !== -1) {
+      const updatedCart = { ...listProducts[cartIndex], count: listProducts[cartIndex].count + 1 };
+      const newList = [...listProducts];
+      newList.splice(cartIndex, 1, updatedCart);
+      setListProducts(newList);
+    }
+
+    dispatch(increaseProduct({ id: product.id, token: token }));
     toast.success(`${product.product.name.slice(0, 20)} is added to cart`, {
       autoClose: 1000,
     });
   };
 
   const decreasedProduct = (product) => {
-    setCount(product.count - 1)
-    dispatch(decreaseProduct({id: product.id, token: token}));
+    const cart = listProducts.find((item) => item.id === product.id);
+    if (cart.count > 1) {
+      const cartIndex = listProducts.findIndex((item) => item.id === product.id);
+      if (cartIndex !== -1) {
+        const updatedCart = { ...listProducts[cartIndex], count: listProducts[cartIndex].count - 1 };
+        const newList = [...listProducts];
+        newList.splice(cartIndex, 1, updatedCart);
+        setListProducts(newList);
+      }
+    } else {
+      const newCarts = listProducts.filter((item) => item.id != product.id);
+      setListProducts(newCarts);
+    }
+
+    dispatch(decreaseProduct({ id: product.id, token: token }));
     toast.warning(`${product.product.name.slice(0, 20)} is removed from cart`, {
       autoClose: 1000,
     });
   };
 
-  if (products.length === 0) {
+  if (listProducts.length === 0) {
     return <EmptyCart />;
   }
 
@@ -64,12 +85,15 @@ const Cart = () => {
     <div className="cart container py-5 mt-4">
       <h2 className="py-3 text-center">Cart Page</h2>
 
-      {products?.map((product) => {
+      {listProducts?.map((product) => {
         return (
           <div key={product.product.id} className="cartCard">
             <div>
-              <img src={"data:image/png;base64," + product?.product?.image} alt="product" width="50px" />
-              
+              <img
+                src={ product?.product?.image ? "data:image/png;base64," + product?.product?.image : noitem}
+                alt="product"
+                width="50px"
+              />
             </div>
 
             <div>

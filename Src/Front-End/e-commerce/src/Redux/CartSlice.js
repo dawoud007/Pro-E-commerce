@@ -15,7 +15,7 @@ export const addToCart = createAsyncThunk("cart/post", async (payload) => {
   console.log(payload);
   try {
     console.log(payload.data);
-    const data = { "productId": payload.data.id }
+    const data = { "productId": payload.data }
     console.log(data);
     const response = await axios.post(`${base_url}/Post`, data, {
       headers: {

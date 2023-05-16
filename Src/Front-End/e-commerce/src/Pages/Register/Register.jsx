@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
+import Loader from "../../Components/Loader/Loader";
 
 function Register() {
   const [username, setUsername] = useState()
@@ -10,7 +11,7 @@ function Register() {
   const [password, setPassword] = useState()
   const [gender, setGender] = useState()
   const navigate = useNavigate()
-  const {register, currentUser} = useContext(AuthContext)
+  const {register, currentUser, loading} = useContext(AuthContext)
   
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -20,6 +21,10 @@ function Register() {
   useEffect(() => {
     currentUser?.isSuccess && navigate('/')
   }, [currentUser])
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="register">

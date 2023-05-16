@@ -15,6 +15,7 @@ import { AuthContext } from "./context/authContext";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import { ABOUT, CART, ERROR, PRODUCT, ROOT } from "./Navigation/Paths";
+import { getCookies } from "./Custom/useCookies";
 
 function App() {
 
@@ -33,7 +34,8 @@ function App() {
   };
 
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser?.token) {
+    const token = getCookies('token')
+    if (!token) {
       return <Navigate to="/login" />;
     }
 
