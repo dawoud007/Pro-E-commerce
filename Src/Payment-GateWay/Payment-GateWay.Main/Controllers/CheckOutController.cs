@@ -48,17 +48,7 @@ public class CheckoutController : ControllerBase
         thisApiUrl = "http://localhost:5196";
         if (thisApiUrl is not null)
         {
-            switch (product.PlanType.ToLower())
-            {
-                case "premium":
-                    product.Price = 5000;
-                    break;
-                case "platinum":
-                    product.Price = 8000;
-                    break;
-                default:
-                    return BadRequest("Invalid plan type.");
-            }
+         
             string? user = GetUserNameFromToken(product.User!);
             product.User = user;
             StripeSettings stripeSettings = await CheckOut(product, thisApiUrl);
@@ -110,7 +100,7 @@ public class CheckoutController : ControllerBase
                         Currency = "USD",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = product.PlanType,
+                            Name = product.User,
                             Description="User Name"+product.User,
 
                         },
@@ -151,7 +141,7 @@ public class CheckoutController : ControllerBase
         return userName;
     }
 
-
+/*
     [HttpGet("GetPlanType")]
     public async Task<string> GetPlanType(string token)
     {
@@ -163,7 +153,7 @@ public class CheckoutController : ControllerBase
         var userPlan = await _userPlanRepository.GetAsync(userName);
         return userPlan;
 
-    }
+    }*/
 
 
 

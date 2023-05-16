@@ -59,11 +59,13 @@ namespace ElectronicsShop_service.Controllers
                 Id = Guid.NewGuid(),
                 Product = product,
                 Customer = customer,
+                CustomerId=customer.Id,
                 Count = 1
             };
-
+            var sa = va;
             await _cartRepository.AddAsync(va);
             await _cartRepository.Save();
+           
             return Ok(va);
         }
 

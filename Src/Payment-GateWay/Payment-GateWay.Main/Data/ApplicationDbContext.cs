@@ -36,7 +36,6 @@ namespace Payment_GateWay.Main.Data
                 {
                     Id = i*5,
                     User="palnUserName",
-                    PlanType = "Premium",
                     Price= i*5,
                   
                 };
