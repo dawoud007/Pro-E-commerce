@@ -4,6 +4,7 @@ version: '3.4'
 
 services:
   authentication:
+    image: badea741/authentication:v1
     build:
       context: .
       dockerfile: Authentication/Authentication.Entry/Dockerfile
@@ -56,7 +57,7 @@ services:
       - "15672:15672"
     
   electronics_shop:
-    image: electronics_shop
+    image: badea741/takeideaandbuytommorow:v1
     build:
       context: .
       dockerfile: ElectronicsShop-service/Dockerfile
@@ -92,46 +93,7 @@ services:
       - 3307:3307
     restart: always
 
-  paymentgatewaymain:
-    image: paymentgatewaymain
-    build:
-      context: .
-      dockerfile: Payment-GateWay/Payment-GateWay.Main/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=server=paymentgatewaydb;Port=3309;database=payment;Uid=root;pwd=2510203121;
-    ports:
-      - 5006:5006
-      - 5007:5007
-    healthcheck:
-      test: ["CMD","curl","-f","http://paymentgatewaydb:3309"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    depends_on:
-      - paymentgatewaydb
-    volumes:
-      - ./Payment-GateWay:/src/Payment-GateWay
-    restart: always
-
-  paymentgatewaydb:
-    image: mysql/mysql-server:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=2510203121
-      - MYSQL_DATABASE=payment
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=2510203121
-      - MYSQL_TCP_PORT=3309
-    ports:
-      - 3309:3309
-    volumes:
-      - paymentgatewaydbvolume:/var/lib/mysql3
-    restart: always
-
-
 volumes:
   businessdbvolume:
   authenticationdbvolume:
-  paymentgatewaydbvolume:
 

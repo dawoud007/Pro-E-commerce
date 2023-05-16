@@ -18,7 +18,7 @@ function Register() {
   }
 
   useEffect(() => {
-    currentUser?.token && navigate('/')
+    currentUser?.isSuccess && navigate('/')
   }, [currentUser])
 
   return (

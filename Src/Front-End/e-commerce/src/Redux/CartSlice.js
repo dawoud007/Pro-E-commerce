@@ -14,16 +14,6 @@ const initialState = {
 export const addToCart = createAsyncThunk("cart/post", async (payload) => {
   console.log(payload);
   try {
-    // const itemIndex = initialState.cart.findIndex(
-    //   (item) => item.id === payload.data.id
-    // );
-    // if (itemIndex >= 0) {
-    //   initialState.cart[itemIndex].quantity += 1;
-    // } else {
-    //   const product = { ...payload.data, quantity: 1 };
-    //   initialState.cart.push(product.data);
-    // }
-    // localStorage.setItem("cart", JSON.stringify(initialState.cart));
     console.log(payload.data);
     const data = { "productId": payload.data.id }
     console.log(data);

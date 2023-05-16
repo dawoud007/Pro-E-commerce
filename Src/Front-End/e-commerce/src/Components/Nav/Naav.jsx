@@ -47,6 +47,7 @@ const Naav = () => {
               title="Log out"
               onClick={() => logout()}
               size={25}
+              style={{color: "white", cursor: "pointer"}}
             />
           </Nav>
         </Navbar.Collapse>

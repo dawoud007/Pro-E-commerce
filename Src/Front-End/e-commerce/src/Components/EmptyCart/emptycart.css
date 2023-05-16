@@ -9,4 +9,7 @@
   max-width: 700px;
   width: 100%;
   height: auto;
+}
+.emptyCart .btn-empty {
+  align-self: center;
 }/*# sourceMappingURL=emptycart.css.map */

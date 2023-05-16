@@ -3,21 +3,20 @@ import "./Login.css";
 import { AuthContext } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 
-
 function Login() {
   const { login, currentUser } = useContext(AuthContext);
-  const [username, setUsername] = useState()
-  const [password, setPassword] = useState()
-  const navigate = useNavigate()
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    e.preventDefault()
-    login({userName:username, password:password});
+    e.preventDefault();
+    login({ userName: username, password: password });
   };
 
   useEffect(() => {
-    currentUser?.token && navigate('/')
-  }, [currentUser])
+    currentUser?.token && navigate("/");
+  }, [currentUser]);
 
   return (
     <div className="login">
@@ -36,20 +35,33 @@ function Login() {
         </div>
         <div className="right">
           <h1>Login</h1>
-          <form onSubmit={handleLogin}> 
-            <input type="text" placeholder="Username" onChange={(x)=> setUsername(x.target.value)} />
-            <div>{currentUser?.errorMessages?.map((errorMsg) => {
-              return(
-                <>{errorMsg.includes("username") ? errorMsg : null}</>
-              )
-            })}</div>
-            <input type="password" placeholder="Password" onChange={(x)=> setPassword(x.target.value)} />
-            <div>{currentUser?.errorMessages?.map((errorMsg) => {
-              return(
-                <>{errorMsg.includes("password") ? errorMsg : null}</>
-              )
-            })}</div>
-            <button type='submit'>Login</button>
+          <form onSubmit={handleLogin}>
+            <input
+              type="text"
+              placeholder="Username"
+              onChange={(x) => setUsername(x.target.value)}
+            />
+            <div>
+              {currentUser?.errorMessages?.map((errorMsg) => {
+                return <>{errorMsg.includes("username") ? errorMsg : null}</>;
+              })}
+            </div>
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(x) => setPassword(x.target.value)}
+            />
+            <div>
+              {currentUser?.errorMessages?.map((errorMsg) => {
+                return <>{errorMsg.includes("password") ? errorMsg : null}</>;
+              })}
+            </div>
+            <button type="submit">Login</button>
+            <div>
+              {currentUser?.errorMessages?.map((errorMsg) => {
+                return <>{errorMsg.includes("email") ? errorMsg : null}</>;
+              })}
+            </div>
           </form>
         </div>
       </div>

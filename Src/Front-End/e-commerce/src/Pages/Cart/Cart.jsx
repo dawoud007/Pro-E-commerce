@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./cart.css";
 import EmptyCart from "../../Components/EmptyCart/EmptyCart";
@@ -9,6 +9,7 @@ import { getCookies } from "../../Custom/useCookies";
 const Cart = () => {
   const dispatch = useDispatch();
   const { products, status } = useSelector((state) => state.cart);
+  const [count, setCount] = useState(0)
   const token = getCookies("token");
 
   console.log(products);
@@ -24,6 +25,8 @@ const Cart = () => {
 
   const removeProductHandler = (product) => {
     console.log(product);
+    const updatedItems = products.filter(item => item.id !== product.id);
+    this.setState({items: updatedItems});
     dispatch(RemoveFromCart({id: product.id, token: token}));
     toast.warning(`${product.product.name.slice(0, 20)} is removed from cart`, {
       autoClose: 1000,
@@ -38,6 +41,7 @@ const Cart = () => {
   };
 
   const increasedProduct = (product) => {
+    setCount(product.count + 1)
     dispatch(increaseProduct({id: product.id, token: token}));
     toast.success(`${product.product.name.slice(0, 20)} is added to cart`, {
       autoClose: 1000,
@@ -45,6 +49,7 @@ const Cart = () => {
   };
 
   const decreasedProduct = (product) => {
+    setCount(product.count - 1)
     dispatch(decreaseProduct({id: product.id, token: token}));
     toast.warning(`${product.product.name.slice(0, 20)} is removed from cart`, {
       autoClose: 1000,
@@ -111,10 +116,6 @@ const Cart = () => {
       <hr />
 
       <div className="mb-5 d-flex justify-content-between">
-        <button className="btn btn-danger" onClick={removeAllProduct}>
-          Remove All items
-        </button>
-
         <h5>
           Total Price: <b>${totalPrice.toFixed(2)}</b>
         </h5>

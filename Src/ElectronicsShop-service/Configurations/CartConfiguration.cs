@@ -10,13 +10,12 @@ public class CartConfiguration : BaseConfiguration<Cart>
     {
         base.Configure(builder);
         builder.HasOne(c => c.Product)
-                 .WithOne(p => p.Cart)
-                 .HasForeignKey<Cart>(c => c.ProductId)
+                 .WithMany(p => p.Carts)
                  .IsRequired();
 
 
 
 
-        
+
     }
 }

@@ -31,7 +31,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 25, DateTimeKind.Local).AddTicks(8505));
+                        .HasDefaultValue(new DateTime(2023, 5, 16, 18, 51, 37, 883, DateTimeKind.Local).AddTicks(9301));
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("char(36)");
@@ -39,8 +39,8 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<Guid?>("CustomerId1")
                         .HasColumnType("char(36)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<Guid?>("ProductId")
                         .IsRequired()
@@ -53,8 +53,7 @@ namespace ElectronicsShop_service.Migrations
                     b.HasIndex("CustomerId1")
                         .IsUnique();
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Carts");
                 });
@@ -68,7 +67,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 26, DateTimeKind.Local).AddTicks(4952));
+                        .HasDefaultValue(new DateTime(2023, 5, 16, 18, 51, 37, 884, DateTimeKind.Local).AddTicks(1331));
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
@@ -80,6 +79,28 @@ namespace ElectronicsShop_service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("548a7a30-a8fd-462b-b061-a322575ea28a"),
+                            Name = "electronics"
+                        },
+                        new
+                        {
+                            Id = new Guid("43ec0fda-969f-4bfa-8000-f2c502924e6b"),
+                            Name = "jewelery"
+                        },
+                        new
+                        {
+                            Id = new Guid("fbc8e990-6ccc-4393-808a-3ddb2a2ef577"),
+                            Name = "men's clothing"
+                        },
+                        new
+                        {
+                            Id = new Guid("9b505453-bb9d-4b19-a21e-c9166ca7ed7b"),
+                            Name = "women's clothing"
+                        });
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Customer", b =>
@@ -95,7 +116,7 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 26, DateTimeKind.Local).AddTicks(7319));
+                        .HasDefaultValue(new DateTime(2023, 5, 16, 18, 51, 37, 884, DateTimeKind.Local).AddTicks(2946));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -161,12 +182,13 @@ namespace ElectronicsShop_service.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2023, 4, 30, 5, 17, 29, 30, DateTimeKind.Local).AddTicks(6991));
+                        .HasDefaultValue(new DateTime(2023, 5, 16, 18, 51, 37, 889, DateTimeKind.Local).AddTicks(7104));
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()
@@ -176,13 +198,13 @@ namespace ElectronicsShop_service.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
-                    b.Property<Guid?>("categoryID")
+                    b.Property<Guid?>("categoryId")
                         .HasColumnType("char(36)");
 
-                    b.Property<int?>("code")
+                    b.Property<int>("code")
                         .HasColumnType("int");
 
                     b.Property<string>("color")
@@ -196,9 +218,6 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<byte[]>("image")
                         .HasColumnType("longblob");
 
-                    b.Property<float>("price")
-                        .HasColumnType("float");
-
                     b.Property<int?>("quantity")
                         .HasColumnType("int");
 
@@ -208,7 +227,7 @@ namespace ElectronicsShop_service.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("categoryID");
+                    b.HasIndex("categoryId");
 
                     b.ToTable("Products");
                 });
@@ -226,8 +245,8 @@ namespace ElectronicsShop_service.Migrations
                         .HasForeignKey("ElectronicsShop_service.Models.Cart", "CustomerId1");
 
                     b.HasOne("ElectronicsShop_service.Models.Product", "Product")
-                        .WithOne("Cart")
-                        .HasForeignKey("ElectronicsShop_service.Models.Cart", "ProductId")
+                        .WithMany("Carts")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -259,7 +278,7 @@ namespace ElectronicsShop_service.Migrations
                 {
                     b.HasOne("ElectronicsShop_service.Models.Category", "category")
                         .WithMany("Products")
-                        .HasForeignKey("categoryID")
+                        .HasForeignKey("categoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("category");
@@ -279,7 +298,7 @@ namespace ElectronicsShop_service.Migrations
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Product", b =>
                 {
-                    b.Navigation("Cart");
+                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }

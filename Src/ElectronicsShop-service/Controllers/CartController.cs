@@ -45,7 +45,7 @@ namespace ElectronicsShop_service.Controllers
         public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
         {
 
-            string alreadyExists = "aleardy exists"!;
+            string alreadyExists = "already exists";
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
             Product product = (await _productRepository.GetByIdAsync(entityViewModel.ProductId));
@@ -58,23 +58,13 @@ namespace ElectronicsShop_service.Controllers
             {
                 Id = Guid.NewGuid(),
                 Product = product,
-                ProductId = product.Id,
                 Customer = customer,
-                CustomerId = customer.Id,
                 Count = 1
             };
-            if ((await _cartRepository.Get(p => p.ProductId == product.Id, null, "Product")).FirstOrDefault() == null)
-            {
-                await _cartRepository.AddAsync(va);
-                await _cartRepository.Save();
 
-                return Ok(va);
-
-            }
-            return Ok(alreadyExists);
-
-
-
+            await _cartRepository.AddAsync(va);
+            await _cartRepository.Save();
+            return Ok(va);
         }
 
 
@@ -102,7 +92,7 @@ namespace ElectronicsShop_service.Controllers
             foreach (var item in cartVM.ListCart)
             {
                 Product product = (await _productRepository.Get(p => p.Id == item.ProductId, null, "")).FirstOrDefault()!;
-                item.Price = product.price;
+                item.Price = product.Price;
                 item.Product = product;
 
 
@@ -148,13 +138,14 @@ namespace ElectronicsShop_service.Controllers
         {
 
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+
             Customer customer = (await _customerRepository.Get(u => u.UserName == username)).FirstOrDefault()!;
             /*var cart = (await _cartRepository.Get(c=>c.CustomerId==customer.Id,null,"")).FirstOrDefault()!;*/
 
             await _cartRepository.RemoveRangeAsync(c => c.CustomerId == customer.Id);
 
             await _cartRepository.Save();
-            return $"cart deleted for {customer.Name}";
+            return $"cart deleted for {customer.UserName} ";
 
 
         }

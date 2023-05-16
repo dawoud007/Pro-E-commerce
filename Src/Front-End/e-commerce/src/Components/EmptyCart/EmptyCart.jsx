@@ -8,7 +8,7 @@ const EmptyCart = () => {
   return (
     <div className='emptyCart'>
       <img src={cart} alt="empty-cart-img" />
-      <button className="btn btn-primary" onClick={() => navigate("/")}>
+      <button className="btn btn-primary btn-empty" onClick={() => navigate("/")}>
         Go Back to Add Some Products
       </button>
     </div>
