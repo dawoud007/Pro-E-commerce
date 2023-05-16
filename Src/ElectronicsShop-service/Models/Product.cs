@@ -27,7 +27,7 @@ public class Product : BaseEntity
     public Guid? CartId { get; set; }
     public decimal Price { get; set; }
 
-    public Cart? Cart { get; set; }
+    public List<Cart>? Carts { get; set; }
 
     public int? quantity { get; set; }
     public ICollection<Customer> Customers { get; set; }

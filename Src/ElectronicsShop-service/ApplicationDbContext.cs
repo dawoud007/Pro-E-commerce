@@ -29,6 +29,12 @@ public class ApplicationDbContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Category>().HasData(
+            new { Id = Guid.NewGuid(), Name = "electronics" },
+            new { Id = Guid.NewGuid(), Name = "jewelery" },
+            new { Id = Guid.NewGuid(), Name = "men's clothing" },
+            new { Id = Guid.NewGuid(), Name = "women's clothing" }
+        );
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         base.OnModelCreating(modelBuilder);
     }

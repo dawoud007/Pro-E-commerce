@@ -20,7 +20,7 @@ namespace ElectronicsShop_service.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DisplayOrder = table.Column<int>(type: "int", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 15, 14, 21, 39, 738, DateTimeKind.Local).AddTicks(3708))
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 16, 18, 51, 37, 884, DateTimeKind.Local).AddTicks(1331))
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace ElectronicsShop_service.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 15, 14, 21, 39, 738, DateTimeKind.Local).AddTicks(5440))
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 16, 18, 51, 37, 884, DateTimeKind.Local).AddTicks(2946))
                 },
                 constraints: table =>
                 {
@@ -63,7 +63,7 @@ namespace ElectronicsShop_service.Migrations
                     code = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    categoryID = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    categoryId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CategoryName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Brand = table.Column<string>(type: "longtext", nullable: false)
@@ -78,16 +78,16 @@ namespace ElectronicsShop_service.Migrations
                     status = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CartId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    price = table.Column<float>(type: "float", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     quantity = table.Column<int>(type: "int", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 15, 14, 21, 39, 742, DateTimeKind.Local).AddTicks(4125))
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 16, 18, 51, 37, 889, DateTimeKind.Local).AddTicks(7104))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_categoryID",
-                        column: x => x.categoryID,
+                        name: "FK_Products_Categories_categoryId",
+                        column: x => x.categoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -102,9 +102,9 @@ namespace ElectronicsShop_service.Migrations
                     ProductId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Count = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Price = table.Column<double>(type: "double", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     CustomerId1 = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 15, 14, 21, 39, 738, DateTimeKind.Local).AddTicks(796))
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValue: new DateTime(2023, 5, 16, 18, 51, 37, 883, DateTimeKind.Local).AddTicks(9301))
                 },
                 constraints: table =>
                 {
@@ -156,6 +156,17 @@ namespace ElectronicsShop_service.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "DisplayOrder", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("43ec0fda-969f-4bfa-8000-f2c502924e6b"), null, "jewelery" },
+                    { new Guid("548a7a30-a8fd-462b-b061-a322575ea28a"), null, "electronics" },
+                    { new Guid("9b505453-bb9d-4b19-a21e-c9166ca7ed7b"), null, "women's clothing" },
+                    { new Guid("fbc8e990-6ccc-4393-808a-3ddb2a2ef577"), null, "men's clothing" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_CustomerId",
                 table: "Carts",
@@ -170,8 +181,7 @@ namespace ElectronicsShop_service.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ProductId",
                 table: "Carts",
-                column: "ProductId",
-                unique: true);
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerProduct_ProductId",
@@ -179,9 +189,9 @@ namespace ElectronicsShop_service.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_categoryID",
+                name: "IX_Products_categoryId",
                 table: "Products",
-                column: "categoryID");
+                column: "categoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -45,7 +45,7 @@ namespace ElectronicsShop_service.Controllers
         public async override Task<IActionResult> Post([FromBody] CartControllerVMDto entityViewModel)
         {
 
-            string alreadyExists = "aleardy exists"!;
+            string alreadyExists = "already exists";
             var username = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             Customer customer = (await _customerRepository.Get(c => c.UserName == username, null, "")).FirstOrDefault()!;
             Product product = (await _productRepository.GetByIdAsync(entityViewModel.ProductId));
@@ -58,23 +58,13 @@ namespace ElectronicsShop_service.Controllers
             {
                 Id = Guid.NewGuid(),
                 Product = product,
-                ProductId = product.Id,
                 Customer = customer,
-                CustomerId = customer.Id,
                 Count = 1
             };
-            if ((await _cartRepository.Get(p => p.ProductId == product.Id, null, "Product")).FirstOrDefault() == null)
-            {
-                await _cartRepository.AddAsync(va);
-                await _cartRepository.Save();
 
-                return Ok(va);
-
-            }
-            return Ok(alreadyExists);
-
-
-
+            await _cartRepository.AddAsync(va);
+            await _cartRepository.Save();
+            return Ok(va);
         }
 
 
