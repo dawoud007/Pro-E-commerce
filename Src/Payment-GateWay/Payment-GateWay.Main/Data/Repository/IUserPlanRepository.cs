@@ -8,7 +8,7 @@ namespace Payment_Gateway.main.Data.Repository
     public interface IUserPlanRepository 
     {
 
-        public Task<string> GetAsync(string username);
+      
         public Task<UserPlan> AddAsync(UserPlan entity);
         Task SaveAsync();
     }

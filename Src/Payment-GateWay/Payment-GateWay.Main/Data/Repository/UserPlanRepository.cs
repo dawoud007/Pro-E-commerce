@@ -28,16 +28,7 @@ namespace shared.Repository
 
      
 
-        public async Task<string> GetAsync(string username)
-        {
-            if (username == null)
-            {
-                return "not valid user name";
-            }
-            UserPlan user = (await table.Where(u => u.User == username).FirstOrDefaultAsync())!;
-            var PlanType = user.PlanType;
-            return PlanType;
-        }
+   
         public virtual async Task SaveAsync( )
         {
              await _context.SaveChangesAsync();
